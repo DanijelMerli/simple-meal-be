@@ -2,7 +2,7 @@ package com.simpletask.simplemeal.dto;
 
 public class ListOfMealsDTO {
 	
-private int idFoodMenu;
+	private int idFoodMenu;
 	
 	private String typeMenu;
 	

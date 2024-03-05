@@ -2,6 +2,7 @@ package com.simpletask.simplemeal.model;
 
 import java.io.Serializable;
 
+import com.simpletask.simplemeal.enums.MealSize;
 import com.simpletask.simplemeal.enums.MealType;
 
 import jakarta.persistence.Entity;
@@ -21,7 +22,7 @@ public class FoodMenu implements Serializable{
 	
 	private MealType typeMenu;
 	
-	private String size;
+	private MealSize size;
 	
 	private double price;
 	
@@ -32,13 +33,19 @@ public class FoodMenu implements Serializable{
 	public FoodMenu() {
 	}
 	
-	public String getSize() {
+		
+
+	public MealSize getSize() {
 		return size;
 	}
 
-	public void setSize(String size) {
+
+
+	public void setSize(MealSize size) {
 		this.size = size;
-	}	
+	}
+
+
 
 	public boolean isSpecial() {
 		return isSpecial;
