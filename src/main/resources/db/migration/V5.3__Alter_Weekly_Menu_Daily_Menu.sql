@@ -1,0 +1,1 @@
+alter table weekly_menu_daily_menu add constraint foreign key (weekly_menu_id_weekly_menu) references weekly_menu (id_weekly_menu);

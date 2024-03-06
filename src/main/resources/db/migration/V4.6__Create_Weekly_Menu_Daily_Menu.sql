@@ -1,0 +1,1 @@
+ create table weekly_menu_daily_menu (daily_menu_id_daily_menu integer not null, weekly_menu_id_weekly_menu integer not null);

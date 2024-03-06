@@ -1,0 +1,1 @@
+alter table daily_menu add constraint  foreign key (fit_id_food_menu) references meal (id_food_menu);

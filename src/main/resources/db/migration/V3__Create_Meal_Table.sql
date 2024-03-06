@@ -1,4 +1,4 @@
-CREATE TABLE Food_Menu (
+CREATE TABLE Meal (
     id_Food_Menu INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     type_Menu INT NOT NULL,
     size INT NULL,
