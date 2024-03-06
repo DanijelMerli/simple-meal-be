@@ -13,7 +13,7 @@ import com.simpletask.simplemeal.model.FoodMenu;
 import com.simpletask.simplemeal.service.FoodMenuService;
 
 @RestController
-@RequestMapping("/meals")
+@RequestMapping("/api/meals")
 public class FoodMenuController {
 	
 	@Autowired
