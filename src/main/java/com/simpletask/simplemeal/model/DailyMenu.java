@@ -24,7 +24,9 @@ public class DailyMenu implements Serializable{
 	
 	private Meal fit;
 	
-	private Extra extras;
+	private Extra soup;
+	
+	private Extra dessert;
 
 	public DailyMenu() {
 		
@@ -62,12 +64,22 @@ public class DailyMenu implements Serializable{
 		this.fit = fit;
 	}
 
-	public Extra getExtras() {
-		return extras;
+	public Extra getExtrasSoup() {
+		return soup;
 	}
 
-	public void setExtras(Extra extras) {
-		this.extras = extras;
+	public void setExtrasSoup(Extra soup) {
+		this.soup = soup;
 	}
+
+	public Extra getDessert() {
+		return dessert;
+	}
+
+	public void setDessert(Extra dessert) {
+		this.dessert = dessert;
+	}
+	
+	
 	
 }

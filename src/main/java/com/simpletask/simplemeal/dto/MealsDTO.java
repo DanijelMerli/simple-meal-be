@@ -1,77 +1,61 @@
-package com.simpletask.simplemeal.model;
+package com.simpletask.simplemeal.dto;
 
-import java.io.Serializable;
-
-import com.simpletask.simplemeal.enums.MealSize;
-import com.simpletask.simplemeal.enums.MealType;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
-@Entity
-public class Meal implements Serializable{
-
-
-	private static final long serialVersionUID = 1L;
+public class MealsDTO {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idFoodMenu;
 	
 	private String name;
 	
-	private MealType typeMenu;
+	private String typeMenu;
 	
-	private MealSize size;
+	private String size;
+	
+
 	
 	private double largePrice;
 	
 	private double smallPrice;
 	
+	
 	private String description;
 	
 	private boolean shouldOrderEarly;
+
 	
 	
-	public Meal() {
+	
+	public MealsDTO(int idFoodMenu, String name, String typeMenu, String size, double largePrice, double smallPrice,
+			String description, boolean shouldOrderEarly) {
+		super();
+		this.idFoodMenu = idFoodMenu;
+		this.name = name;
+		this.typeMenu = typeMenu;
+		this.size = size;
+		this.largePrice = largePrice;
+		this.smallPrice = smallPrice;
+		this.description = description;
+		this.shouldOrderEarly = shouldOrderEarly;
+	}
+
+
+
+
+	public MealsDTO() {
+		
 	}
 	
 	
-	
-		
+
 
 	public String getName() {
 		return name;
 	}
 
 
-
-
-
 	public void setName(String name) {
 		this.name = name;
 	}
 
-
-
-
-
-	public MealSize getSize() {
-		return size;
-	}
-
-
-
-	public void setSize(MealSize size) {
-		this.size = size;
-	}
-
-
-
-	
-	
 
 	public int getIdFoodMenu() {
 		return idFoodMenu;
@@ -81,12 +65,20 @@ public class Meal implements Serializable{
 		this.idFoodMenu = idFoodMenu;
 	}
 
-	public MealType getTypeMenu() {
+	public String getTypeMenu() {
 		return typeMenu;
 	}
 
-	public void setTypeMenu(MealType typeMenu) {
+	public void setTypeMenu(String typeMenu) {
 		this.typeMenu = typeMenu;
+	}
+
+	public String getSize() {
+		return size;
+	}
+
+	public void setSize(String size) {
+		this.size = size;
 	}
 
 
@@ -101,11 +93,9 @@ public class Meal implements Serializable{
 
 
 
-
 	public double getLargePrice() {
 		return largePrice;
 	}
-
 
 
 
@@ -117,11 +107,9 @@ public class Meal implements Serializable{
 
 
 
-
 	public double getSmallPrice() {
 		return smallPrice;
 	}
-
 
 
 
@@ -133,7 +121,6 @@ public class Meal implements Serializable{
 
 
 
-
 	public boolean isShouldOrderEarly() {
 		return shouldOrderEarly;
 	}
@@ -141,11 +128,11 @@ public class Meal implements Serializable{
 
 
 
-
 	public void setShouldOrderEarly(boolean shouldOrderEarly) {
 		this.shouldOrderEarly = shouldOrderEarly;
 	}
+
 	
 	
-	
+
 }

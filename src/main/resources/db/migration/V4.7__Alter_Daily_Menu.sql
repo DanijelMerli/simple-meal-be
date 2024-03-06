@@ -1,1 +1,1 @@
-alter table daily_menu add constraint foreign key (extras_id_extra) references extra (id_extra);
+alter table daily_menu add constraint foreign key (soup_id_extra) references extra (id_extra);

@@ -19,6 +19,8 @@ public class Extra implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idExtra;
 	
+	private String name;
+	
 	private ExtraType extraType;
 	
 	private double price;
@@ -26,6 +28,20 @@ public class Extra implements Serializable{
 	public Extra() {
 		
 	}
+	
+	
+
+	public String getName() {
+		return name;
+	}
+
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
 
 	public int getIdExtra() {
 		return idExtra;
