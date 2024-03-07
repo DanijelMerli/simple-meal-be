@@ -8,12 +8,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.simpletask.simplemeal.exception.InvalidRegisterException;
+import com.simpletask.simplemeal.exception.NotFoundException;
 import com.simpletask.simplemeal.model.User;
 import com.simpletask.simplemeal.services.UserService;
 import com.simpletask.simplemeal.services.UserServiceI;
 
 import dto.UserDTO;
-import exceptions.InvalidRegisterException;
 import jakarta.validation.Valid;
 
 @RestController
@@ -32,7 +33,7 @@ public class UserController {
       		System.out.print(userDTO);
             User savedUser =userService.registerUser(userDTO);
             if (savedUser!=null)
-            	return  new ResponseEntity<>("Registration successful", HttpStatus.OK);
+            	return  new ResponseEntity<>(HttpStatus.OK);
             else 
             	throw new InvalidRegisterException("Registration failed");
             

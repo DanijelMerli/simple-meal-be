@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.simpletask.simplemeal.exception.InvalidRegisterException;
 import com.simpletask.simplemeal.model.User;
 import com.simpletask.simplemeal.repository.UserRepository;
 
@@ -34,6 +35,7 @@ public class UserService implements UserServiceI{
 
 
 	public User registerUser(UserDTO userDTO) throws Exception  {
+		
 		User user = convertToUser(userDTO);
 		String password =hashPassword(userDTO.getPassword());
 		user.setPassword(password);

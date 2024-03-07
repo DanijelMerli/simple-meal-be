@@ -7,9 +7,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
-
-import exceptions.InvalidRegisterException;
-
 @ControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
@@ -25,7 +22,10 @@ public class GlobalExceptionHandler {
     }
     
     @ExceptionHandler(InvalidRegisterException.class)
-    public ResponseEntity<String> handleInvalidRegistrationException(InvalidRegisterException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Object> handleInvalidRegistrationException(InvalidRegisterException ex) {
+    		ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), HttpStatus.CONFLICT.value());
+           return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);    }
     }
-}
+
+
+

@@ -1,4 +1,4 @@
-package exceptions;
+package com.simpletask.simplemeal.exception;
 
 public class InvalidRegisterException extends RuntimeException {
 
