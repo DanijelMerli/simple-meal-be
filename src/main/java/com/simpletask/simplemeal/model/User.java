@@ -1,17 +1,21 @@
 package com.simpletask.simplemeal.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-public class User implements Serializable{
+public class User implements Serializable, UserDetails{
 	
 
-	private static final long serialVersionUID = 1L;
+//	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +29,22 @@ public class User implements Serializable{
 	
 	private String password;
 
+	@Transient
+	private String token;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonManagedReference
+	private Role role;
+
 	public User() {
+	}
+
+	public User(String firstName, String lastName, String email, String password, Role role) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
+		this.role = role;
 	}
 
 	public int getIdUser() {
@@ -67,5 +86,57 @@ public class User implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + this.idUser + ", name=" + firstName + ", surname=" + lastName + ", email=" + email + ", password="
+				+ password + ", role=" + role.toString() + ", accessToken=" + token + "]";
+	}
+
+	/*****************************************************************/
+
+	@JsonIgnore
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		List<Role> roles = new ArrayList<Role>();
+		roles.add(this.role);
+		return roles;
+	}
+	@JsonIgnore
+	@Override
+	public String getUsername() {
+		return email;
+	}
+
+	@JsonIgnore
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@JsonIgnore
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
+
+	@JsonIgnore
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
 }
