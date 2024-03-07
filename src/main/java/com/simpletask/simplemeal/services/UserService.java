@@ -9,6 +9,7 @@ import javax.crypto.Cipher;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.simpletask.simplemeal.model.User;
@@ -21,6 +22,7 @@ public class UserService implements UserServiceI{
 	
 	private UserRepository ur;
 	private  ModelMapper modelMapper;
+	private final BCryptPasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
 	
 	@Autowired
 	public UserService(UserRepository ur,ModelMapper modelMapper) {
@@ -28,42 +30,24 @@ public class UserService implements UserServiceI{
 		this.modelMapper=modelMapper;
 	}
 
-	public UserService() {}
+	public UserService() {} 
 
 
 	public User registerUser(UserDTO userDTO) throws Exception  {
 		User user = convertToUser(userDTO);
-		String encPassword = encryptPassword(user.getPassword());
-		user.setPassword(encPassword);
+		String password =hashPassword(userDTO.getPassword());
+		user.setPassword(password);
 		return ur.save(user);
 	} 
 	
-	private String encryptPassword(String password) throws Exception {
-	    
-	    String encryptedPassword = asymmetricEncrypt(password);
-	    return encryptedPassword;
-	}
+	public String hashPassword(String password) {
+        return passwordEncoder.encode(password);
+    }
+
+    public boolean verifyPassword(String password, String hashedPassword) {
+        return passwordEncoder.matches(password, hashedPassword);
+    }
 	
-    public  String asymmetricEncrypt(String password) throws Exception {
-        KeyPair keyPair = generateRSAKeyPair();
-
-        Cipher cipher = Cipher.getInstance("RSA");
-        cipher.init(Cipher.ENCRYPT_MODE, keyPair.getPublic());
-        byte[] encryptedBytes = cipher.doFinal(password.getBytes());
-
-        return Base64.getEncoder().encodeToString(encryptedBytes);
-    }
-
-    private  KeyPair generateRSAKeyPair() throws Exception {
-        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-        keyPairGenerator.initialize(2048); 
-        return keyPairGenerator.generateKeyPair();
-    }
-
-    private   PrivateKey getPrivateKey(KeyPair keyPair) {
-        return keyPair.getPrivate();
-    }
-    
     public UserDTO convertToDTO(User user) {
         return modelMapper.map(user, UserDTO.class);
     }
