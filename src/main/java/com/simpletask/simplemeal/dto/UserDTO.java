@@ -1,4 +1,4 @@
-package dto;
+package com.simpletask.simplemeal.dto;
 
 import com.simpletask.simplemeal.annotations.UniqueEmail;
 

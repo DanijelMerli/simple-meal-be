@@ -1,22 +1,16 @@
 package com.simpletask.simplemeal.services;
 
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.PrivateKey;
-import java.util.Base64;
 
-import javax.crypto.Cipher;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.simpletask.simplemeal.dto.UserDTO;
 import com.simpletask.simplemeal.exception.InvalidRegisterException;
 import com.simpletask.simplemeal.model.User;
 import com.simpletask.simplemeal.repository.UserRepository;
-
-import dto.UserDTO;
 
 @Service
 public class UserService implements UserServiceI{
@@ -37,6 +31,8 @@ public class UserService implements UserServiceI{
 	public User registerUser(UserDTO userDTO) throws Exception  {
 		
 		User user = convertToUser(userDTO);
+		if (ur.existsByEmail(user.getEmail()))
+			return null;
 		String password =hashPassword(userDTO.getPassword());
 		user.setPassword(password);
 		return ur.save(user);
