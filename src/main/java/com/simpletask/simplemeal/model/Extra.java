@@ -4,10 +4,7 @@ import java.io.Serializable;
 
 import com.simpletask.simplemeal.enums.ExtraType;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Extra implements Serializable{
@@ -18,8 +15,11 @@ public class Extra implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idExtra;
-	
+
+	@Column(name = "name")
 	private String name;
+
+	private String description;
 	
 	private ExtraType extraType;
 	
@@ -28,8 +28,14 @@ public class Extra implements Serializable{
 	public Extra() {
 		
 	}
-	
-	
+
+	public Extra(int idExtra, String name, String description, ExtraType extraType, double price) {
+		this.idExtra = idExtra;
+		this.name = name;
+		this.description = description;
+		this.extraType = extraType;
+		this.price = price;
+	}
 
 	public String getName() {
 		return name;
@@ -41,7 +47,13 @@ public class Extra implements Serializable{
 		this.name = name;
 	}
 
+	public String getDescription() {
+		return description;
+	}
 
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 	public int getIdExtra() {
 		return idExtra;

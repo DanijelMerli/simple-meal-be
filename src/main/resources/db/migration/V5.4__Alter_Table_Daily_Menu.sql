@@ -1,1 +1,0 @@
-alter table daily_menu add constraint foreign key (dessert_id_extra) references extra (id_extra);

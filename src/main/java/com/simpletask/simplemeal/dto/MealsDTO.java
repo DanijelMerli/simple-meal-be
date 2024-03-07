@@ -1,5 +1,7 @@
 package com.simpletask.simplemeal.dto;
 
+import com.simpletask.simplemeal.model.Meal;
+
 public class MealsDTO {
 	
 	private int idFoodMenu;
@@ -130,6 +132,16 @@ public class MealsDTO {
 
 	public void setShouldOrderEarly(boolean shouldOrderEarly) {
 		this.shouldOrderEarly = shouldOrderEarly;
+	}
+	
+	public MealsDTO(Meal meal) {
+		this.idFoodMenu = meal.getIdFoodMenu();
+		this.name = meal.getName();
+		this.typeMenu = meal.getTypeMenu().toString();
+		this.largePrice = meal.getLargePrice();
+		this.smallPrice = meal.getSmallPrice();
+		this.description = meal.getDescription();
+		this.shouldOrderEarly = meal.isShouldOrderEarly();
 	}
 
 	

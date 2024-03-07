@@ -24,8 +24,6 @@ public class Meal implements Serializable{
 	
 	private MealType typeMenu;
 	
-	private MealSize size;
-	
 	private double largePrice;
 	
 	private double smallPrice;
@@ -53,22 +51,6 @@ public class Meal implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-
-
-
-
-
-	public MealSize getSize() {
-		return size;
-	}
-
-
-
-	public void setSize(MealSize size) {
-		this.size = size;
-	}
-
-
 
 	
 	

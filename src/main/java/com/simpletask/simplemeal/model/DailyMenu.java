@@ -3,10 +3,8 @@ package com.simpletask.simplemeal.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 
 @Entity
 public class DailyMenu implements Serializable{
@@ -19,14 +17,27 @@ public class DailyMenu implements Serializable{
 	private int idDailyMenu;
 	
 	private Date dateMenu;
-	
+
+	@ManyToOne
+	@JoinColumn(name = "regular")
 	private Meal regular;
-	
+
+	@ManyToOne
+	@JoinColumn(name = "fit")
 	private Meal fit;
-	
+
+	@ManyToOne
+	@JoinColumn(name = "soup")
 	private Extra soup;
-	
+
+	@ManyToOne
+	@JoinColumn(name = "dessert")
 	private Extra dessert;
+
+	@JsonIgnore
+	@ManyToOne(cascade = {CascadeType.ALL})
+	@JoinColumn(name = "weekly_menu", nullable=false)
+	private WeeklyMenu weeklyMenu;
 
 	public DailyMenu() {
 		

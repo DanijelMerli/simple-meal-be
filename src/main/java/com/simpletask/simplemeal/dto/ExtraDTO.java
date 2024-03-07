@@ -1,12 +1,14 @@
 package com.simpletask.simplemeal.dto;
 
-
+import com.simpletask.simplemeal.model.Extra;
 
 public class ExtraDTO {
 	
 	private int idExtra;
 	
 	private String name;
+	
+	private String description;
 	
 	private String extraType;
 	
@@ -16,10 +18,11 @@ public class ExtraDTO {
 		
 	}
 
-	public ExtraDTO(int idExtra, String name, String extraType, double price) {
+	public ExtraDTO(int idExtra, String name, String extraType, double price, String description) {
 		super();
 		this.idExtra = idExtra;
 		this.name = name;
+		this.description = description;
 		this.extraType = extraType;
 		this.price = price;
 	}
@@ -54,6 +57,23 @@ public class ExtraDTO {
 
 	public void setPrice(double price) {
 		this.price = price;
+	}
+	
+	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public ExtraDTO(Extra extra) {
+		this.idExtra = extra.getIdExtra();
+		this.extraType = extra.getExtraType().toString();
+		this.name = extra.getName();
+		this.description = extra.getDescription();
+		this.price = extra.getPrice();
 	}
 	
 	

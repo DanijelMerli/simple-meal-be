@@ -1,6 +1,10 @@
 package com.simpletask.simplemeal.dto;
 
-import java.util.Date;
+import com.simpletask.simplemeal.model.DailyMenu;
+import com.simpletask.simplemeal.model.WeeklyMenu;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -10,13 +14,13 @@ public class WeeklyMenuDTO {
 	
 	private List<DailyMenuDTO> dailyMenu;
 	
-	private Date startDate;
+	private String startDate;
 
 	public WeeklyMenuDTO() {
 		
 	}
 
-	public WeeklyMenuDTO(int idWeeklyMenu, List<DailyMenuDTO> dailyMenu, Date startDate) {
+	public WeeklyMenuDTO(int idWeeklyMenu, List<DailyMenuDTO> dailyMenu, String startDate) {
 		super();
 		this.idWeeklyMenu = idWeeklyMenu;
 		this.dailyMenu = dailyMenu;
@@ -39,15 +43,24 @@ public class WeeklyMenuDTO {
 		this.dailyMenu = dailyMenu;
 	}
 
-	public Date getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
 	
-	
+	public WeeklyMenuDTO(WeeklyMenu weekly) {
+		this.idWeeklyMenu = weekly.getIdWeeklyMenu();
+		List<DailyMenuDTO> dailyMenuDTOs = new ArrayList<>();
+		for (DailyMenu dm : weekly.getDailyMenu()) {
+			dailyMenuDTOs.add(new DailyMenuDTO(dm));
+		}
+		this.dailyMenu = dailyMenuDTOs;
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy.");
+		this.startDate = dateFormat.format(weekly.getStartDate());
+	}
 	
 	
 

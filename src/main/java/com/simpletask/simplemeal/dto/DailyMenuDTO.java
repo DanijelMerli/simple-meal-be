@@ -1,12 +1,15 @@
 package com.simpletask.simplemeal.dto;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import com.simpletask.simplemeal.model.DailyMenu;
 
 
 public class DailyMenuDTO {
 	private int idDailyMenu;
 	
-	private Date dateMenu;
+	private String dateMenu;
 	
 	private MealsDTO regular;
 	
@@ -18,7 +21,7 @@ public class DailyMenuDTO {
 
 	
 
-	public DailyMenuDTO(int idDailyMenu, Date dateMenu, MealsDTO regular, MealsDTO fit, ExtraDTO soup,
+	public DailyMenuDTO(int idDailyMenu, String dateMenu, MealsDTO regular, MealsDTO fit, ExtraDTO soup,
 			ExtraDTO dessert) {
 		super();
 		this.idDailyMenu = idDailyMenu;
@@ -41,11 +44,11 @@ public class DailyMenuDTO {
 		this.idDailyMenu = idDailyMenu;
 	}
 
-	public Date getDateMenu() {
+	public String getDateMenu() {
 		return dateMenu;
 	}
 
-	public void setDateMenu(Date dateMenu) {
+	public void setDateMenu(String dateMenu) {
 		this.dateMenu = dateMenu;
 	}
 
@@ -82,7 +85,16 @@ public class DailyMenuDTO {
 	}
 
 
-	
+	public DailyMenuDTO(DailyMenu menu) {
+		this.idDailyMenu=menu.getIdDailyMenu();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy.");
+		this.dateMenu= dateFormat.format(menu.getDate());
+		this.fit= menu.getFit() != null ? new MealsDTO(menu.getFit()) : null;
+		this.regular= menu.getRegular() != null ? new MealsDTO(menu.getRegular()) : null;
+		this.dessert=menu.getDessert() != null ? new ExtraDTO(menu.getDessert()) : null;
+		this.soup= menu.getExtrasSoup() != null ? new ExtraDTO(menu.getExtrasSoup()) : null;
+		this.idDailyMenu = menu.getIdDailyMenu();
+	}
 	
 	
 	

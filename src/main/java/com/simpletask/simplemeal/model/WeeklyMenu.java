@@ -4,10 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 
 @Entity
 public class WeeklyMenu implements Serializable{
@@ -18,7 +16,9 @@ public class WeeklyMenu implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idWeeklyMenu;
-	
+
+	@JsonIgnore
+	@OneToMany(targetEntity = DailyMenu.class, mappedBy = "weeklyMenu", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<DailyMenu> dailyMenu;
 	
 	private Date startDate;
