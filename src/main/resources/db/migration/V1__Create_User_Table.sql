@@ -1,7 +1,7 @@
 CREATE TABLE User (
-    idUser INT NOT NULL PRIMARY KEY,
-    firstName VARCHAR(50) NOT NULL,
-    lastName VARCHAR(50) NOT NULL,
+    id_User INT NOT NULL PRIMARY KEY,
+    first_Name VARCHAR(50) NOT NULL,
+    last_Name VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL,
     password VARCHAR(50) NOT NULL
 );
