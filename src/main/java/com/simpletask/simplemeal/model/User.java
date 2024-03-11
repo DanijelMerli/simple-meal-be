@@ -7,6 +7,8 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.simpletask.simplemeal.dto.UserDTO;
+
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -55,6 +57,14 @@ public class User implements Serializable, UserDetails{
 		this.email = email;
 		this.password = password;
 		this.role = role;
+	}
+	
+	public User(UserDTO userDTO) {
+		this.firstName = userDTO.getFirstName();
+		this.lastName = userDTO.getLastName();
+		this.email = userDTO.getLastName();
+		this.password = userDTO.getEmail();
+		this.role = null;;
 	}
 
 	public int getIdUser() {

@@ -30,17 +30,6 @@ public class UserController {
 		this.userService = userService;
 	}
 
-	@PostMapping(value="/register", consumes = MediaType.APPLICATION_JSON_VALUE, 
-			  produces = MediaType.APPLICATION_JSON_VALUE)
-	  public ResponseEntity<String> createUser(@Valid @RequestBody UserDTO userDTO) throws Exception {
-		try {
-			   User savedUser =userService.registerUser(userDTO);
-            	return  new ResponseEntity<>(HttpStatus.OK);
-            } catch(Exception e) {
-            	
-            	throw new InvalidRegisterException("Registration failed");
-            }
-    }
 	
 	 
 }
