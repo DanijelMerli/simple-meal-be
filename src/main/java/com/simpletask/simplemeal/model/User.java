@@ -59,13 +59,6 @@ public class User implements Serializable, UserDetails{
 		this.role = role;
 	}
 	
-	public User(UserDTO userDTO) {
-		this.firstName = userDTO.getFirstName();
-		this.lastName = userDTO.getLastName();
-		this.email = userDTO.getLastName();
-		this.password = userDTO.getEmail();
-		this.role = null;;
-	}
 
 	public int getIdUser() {
 		return idUser;
