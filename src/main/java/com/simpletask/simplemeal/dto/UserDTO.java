@@ -1,6 +1,7 @@
 package com.simpletask.simplemeal.dto;
 
 import com.simpletask.simplemeal.annotations.UniqueEmail;
+import com.simpletask.simplemeal.model.User;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -22,6 +23,10 @@ public class UserDTO {
 	    @NotBlank(message = "Password is required")
 	    @Size(min = 8,message= "Password must have  8+ characters")
 	    private String password;
+	    
+	     
+	    
+	    
 
 		public String getFirstName() {
 			return firstName;

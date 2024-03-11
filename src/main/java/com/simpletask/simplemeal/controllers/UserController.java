@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.simpletask.simplemeal.dto.UserDTO;
@@ -17,12 +18,12 @@ import com.simpletask.simplemeal.service.IUserService;
 
 import jakarta.validation.Valid;
 
-@RestController
 @CrossOrigin(origins = "http://localhost:4200")
+@RestController
+@RequestMapping("api/user/")
 public class UserController {
 	
 	private IUserService userService;
-//	private  UserRepository userRepository;
 	
 	@Autowired
 	public UserController(UserService userService) {
@@ -30,7 +31,7 @@ public class UserController {
 		this.userService = userService;
 	}
 
-	@PostMapping(value="/register", consumes = MediaType.APPLICATION_JSON_VALUE, 
+	@PostMapping(value="register", consumes = MediaType.APPLICATION_JSON_VALUE, 
 			  produces = MediaType.APPLICATION_JSON_VALUE)
 	  public ResponseEntity<String> createUser(@Valid @RequestBody UserDTO userDTO) throws Exception {
 		try {

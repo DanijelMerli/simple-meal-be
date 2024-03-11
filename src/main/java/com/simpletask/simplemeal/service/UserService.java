@@ -39,7 +39,6 @@ public class UserService implements IUserService {
     @Autowired
     private RoleRepository roleRepository;
 
-    private ModelMapper modelMapper;
 
     public User findUserByEmail(String email) {
         return userRepo.findUserByEmail(email);
@@ -72,7 +71,7 @@ public class UserService implements IUserService {
         return generateTokens(user.getEmail());
     }
 
-    public void addDummy() {
+    /*ublic void addDummy() {
         String pass = passwordEncoder.encode("123");
         System.out.println(pass);
         Optional<Role> opt = roleRepository.findById(1);
@@ -80,11 +79,11 @@ public class UserService implements IUserService {
             User user = new User("Kristina", "A", "andrijinkristina@gmail.com", pass, opt.get());
             userRepo.saveAndFlush(user);
         }
-    }
+    }*/
 
     public User registerUser(UserDTO userDTO) throws Exception  {
 
-        User user = convertToUser(userDTO);
+        User user = new User(userDTO);
         if (userRepo.existsByEmail(user.getEmail()))
             return null;
         String password =hashPassword(userDTO.getPassword());
@@ -100,12 +99,13 @@ public class UserService implements IUserService {
         return passwordEncoder.matches(password, hashedPassword);
     }
 
-    public UserDTO convertToDTO(User user) {
-        return modelMapper.map(user, UserDTO.class);
-    }
-
-    public User convertToUser(UserDTO userDTO) {
-        return modelMapper.map(userDTO, User.class);
+    private User convertUserToUserDTO(User user) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setFirstName(user.getFirstName());
+        userDTO.setLastName(user.getLastName());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setPassword(user.getPassword());
+        return user;
     }
 
 
