@@ -2,15 +2,15 @@ package com.simpletask.simplemeal.service;
 
 import com.simpletask.simplemeal.dto.LoginRequestDTO;
 import com.simpletask.simplemeal.dto.LoginResponseDTO;
+import com.simpletask.simplemeal.dto.UserDTO;
 import com.simpletask.simplemeal.exception.NotFoundException;
 import com.simpletask.simplemeal.model.Role;
 import com.simpletask.simplemeal.model.User;
 import com.simpletask.simplemeal.repository.RoleRepository;
 import com.simpletask.simplemeal.repository.UserRepository;
 import com.simpletask.simplemeal.security.TokenUtils;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,10 +21,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
-public class UserService {
+public class UserService implements IUserService {
     @Autowired
     private UserRepository userRepo;
 
@@ -39,6 +38,8 @@ public class UserService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    private ModelMapper modelMapper;
 
     public User findUserByEmail(String email) {
         return userRepo.findUserByEmail(email);
@@ -80,4 +81,32 @@ public class UserService {
             userRepo.saveAndFlush(user);
         }
     }
+
+    public User registerUser(UserDTO userDTO) throws Exception  {
+
+        User user = convertToUser(userDTO);
+        if (userRepo.existsByEmail(user.getEmail()))
+            return null;
+        String password =hashPassword(userDTO.getPassword());
+        user.setPassword(password);
+        return userRepo.save(user);
+    }
+
+    public String hashPassword(String password) {
+        return passwordEncoder.encode(password);
+    }
+
+    public boolean verifyPassword(String password, String hashedPassword) {
+        return passwordEncoder.matches(password, hashedPassword);
+    }
+
+    public UserDTO convertToDTO(User user) {
+        return modelMapper.map(user, UserDTO.class);
+    }
+
+    public User convertToUser(UserDTO userDTO) {
+        return modelMapper.map(userDTO, User.class);
+    }
+
+
 }

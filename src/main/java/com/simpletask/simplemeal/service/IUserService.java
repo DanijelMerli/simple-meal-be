@@ -1,11 +1,9 @@
-package com.simpletask.simplemeal.services;
-
-import org.springframework.stereotype.Service;
+package com.simpletask.simplemeal.service;
 
 import com.simpletask.simplemeal.dto.UserDTO;
 import com.simpletask.simplemeal.model.User;
 
-public interface UserServiceI {
+public interface IUserService {
 
 	public User registerUser(UserDTO userDTO) throws Exception;
 	

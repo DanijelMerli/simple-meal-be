@@ -12,9 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.simpletask.simplemeal.dto.UserDTO;
 import com.simpletask.simplemeal.exception.InvalidRegisterException;
 import com.simpletask.simplemeal.model.User;
-import com.simpletask.simplemeal.repository.UserRepository;
-import com.simpletask.simplemeal.services.UserService;
-import com.simpletask.simplemeal.services.UserServiceI;
+import com.simpletask.simplemeal.service.UserService;
+import com.simpletask.simplemeal.service.IUserService;
 
 import jakarta.validation.Valid;
 
@@ -22,11 +21,12 @@ import jakarta.validation.Valid;
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 	
-	private  UserServiceI userService;
-	private  UserRepository userRepository;
+	private IUserService userService;
+//	private  UserRepository userRepository;
 	
 	@Autowired
 	public UserController(UserService userService) {
+
 		this.userService = userService;
 	}
 
