@@ -84,7 +84,7 @@ public class UserService implements IUserService {
 
     public User registerUser(UserDTO userDTO) throws Exception  {
 
-        User user = convertToUser(userDTO);
+        User user = getUserFromDTO(userDTO);
         if (userRepo.existsByEmail(user.getEmail()))
             return null;
         String password =hashPassword(userDTO.getPassword());
@@ -100,12 +100,23 @@ public class UserService implements IUserService {
         return passwordEncoder.matches(password, hashedPassword);
     }
 
-    public UserDTO convertToDTO(User user) {
-        return modelMapper.map(user, UserDTO.class);
+    
+    private User getUserFromDTO(UserDTO userDTO) {
+    	User user = new User();
+    	user.setFirstName(userDTO.getFirstName());
+    	user.setLastName(userDTO.getLastName());
+    	user.setEmail(userDTO.getEmail());
+    	user.setPassword(userDTO.getPassword());
+    	user.setRole(roleRepository.findById(1).get());
+    	return user;
+    	
     }
-
-    public User convertToUser(UserDTO userDTO) {
-        return modelMapper.map(userDTO, User.class);
+    private UserDTO convertUserToDTO(User user) {
+    	 UserDTO userDTO = new UserDTO();
+         userDTO.setFirstName(user.getFirstName());
+         userDTO.setLastName(user.getLastName());
+         userDTO.setEmail(user.getEmail());
+         return userDTO;
     }
 
 

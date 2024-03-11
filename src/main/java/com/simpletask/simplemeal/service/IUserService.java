@@ -7,10 +7,7 @@ public interface IUserService {
 
 	public User registerUser(UserDTO userDTO) throws Exception;
 	
-	public UserDTO convertToDTO(User user);
 	
-	public User convertToUser(UserDTO userDTO);
-	 
-	 
+
 	
 }

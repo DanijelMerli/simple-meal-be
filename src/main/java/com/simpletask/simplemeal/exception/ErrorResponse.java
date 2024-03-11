@@ -1,5 +1,6 @@
 package com.simpletask.simplemeal.exception;
 
+
 public class ErrorResponse {
     private String message;
     private int statusCode;
