@@ -5,8 +5,6 @@ public class ErrorResponse {
     private String message;
     private int statusCode;
 
-
-
     public ErrorResponse() {
 
     }
