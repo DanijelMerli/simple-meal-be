@@ -52,7 +52,7 @@ public class WeeklyMenuDTO {
 	}
 	
 	public WeeklyMenuDTO(WeeklyMenu weekly) {
-		this.idWeeklyMenu = weekly.getIdWeeklyMenu();
+		this.idWeeklyMenu = weekly.getId();
 		List<DailyMenuDTO> dailyMenuDTOs = new ArrayList<>();
 		for (DailyMenu dm : weekly.getDailyMenu()) {
 			dailyMenuDTOs.add(new DailyMenuDTO(dm));
