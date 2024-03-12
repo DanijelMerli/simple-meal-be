@@ -19,11 +19,11 @@ public class DailyMenu implements Serializable{
 
 	@ManyToOne
 	@JoinColumn(name = "regular")
-	private MainCourse regular;
+	private RegularMeal regular;
 
 	@ManyToOne
 	@JoinColumn(name = "fit")
-	private MainCourse fit;
+	private FitMeal fit;
 
 	@ManyToOne
 	@JoinColumn(name = "soup")
@@ -42,6 +42,25 @@ public class DailyMenu implements Serializable{
 		
 	}
 
+	public DailyMenu(int id, Date dateMenu, RegularMeal regular, FitMeal fit, Extra soup, Extra dessert, WeeklyMenu weeklyMenu) {
+		this.id = id;
+		this.dateMenu = dateMenu;
+		this.regular = regular;
+		this.fit = fit;
+		this.soup = soup;
+		this.dessert = dessert;
+		this.weeklyMenu = weeklyMenu;
+	}
+
+	public DailyMenu(Date dateMenu, RegularMeal regular, FitMeal fit, Extra soup, Extra dessert, WeeklyMenu weeklyMenu) {
+		this.dateMenu = dateMenu;
+		this.regular = regular;
+		this.fit = fit;
+		this.soup = soup;
+		this.dessert = dessert;
+		this.weeklyMenu = weeklyMenu;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -58,19 +77,19 @@ public class DailyMenu implements Serializable{
 		this.dateMenu = dateMenu;
 	}
 
-	public MainCourse getRegular() {
+	public RegularMeal getRegular() {
 		return regular;
 	}
 
-	public void setRegular(MainCourse regular) {
+	public void setRegular(RegularMeal regular) {
 		this.regular = regular;
 	}
 
-	public MainCourse getFit() {
+	public FitMeal getFit() {
 		return fit;
 	}
 
-	public void setFit(MainCourse fit) {
+	public void setFit(FitMeal fit) {
 		this.fit = fit;
 	}
 

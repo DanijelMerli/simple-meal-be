@@ -11,9 +11,9 @@ public class DailyMenuDTO {
 	
 	private String dateMenu;
 	
-	private MainCourseDTO regular;
+	private RegularMealDTO regular;
 	
-	private MainCourseDTO fit;
+	private FitMealDTO fit;
 	
 	private ExtraDTO soup;
 	
@@ -21,7 +21,7 @@ public class DailyMenuDTO {
 
 	
 
-	public DailyMenuDTO(int idDailyMenu, String dateMenu, MainCourseDTO regular, MainCourseDTO fit, ExtraDTO soup,
+	public DailyMenuDTO(int idDailyMenu, String dateMenu, RegularMealDTO regular, FitMealDTO fit, ExtraDTO soup,
 						ExtraDTO dessert) {
 		super();
 		this.idDailyMenu = idDailyMenu;
@@ -52,19 +52,19 @@ public class DailyMenuDTO {
 		this.dateMenu = dateMenu;
 	}
 
-	public MainCourseDTO getRegular() {
+	public RegularMealDTO getRegular() {
 		return regular;
 	}
 
-	public void setRegular(MainCourseDTO regular) {
+	public void setRegular(RegularMealDTO regular) {
 		this.regular = regular;
 	}
 
-	public MainCourseDTO getFit() {
+	public FitMealDTO getFit() {
 		return fit;
 	}
 
-	public void setFit(MainCourseDTO fit) {
+	public void setFit(FitMealDTO fit) {
 		this.fit = fit;
 	}
 
@@ -89,8 +89,8 @@ public class DailyMenuDTO {
 		this.idDailyMenu=menu.getId();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy.");
 		this.dateMenu= dateFormat.format(menu.getDate());
-		this.fit= menu.getFit() != null ? new MainCourseDTO(menu.getFit()) : null;
-		this.regular= menu.getRegular() != null ? new MainCourseDTO(menu.getRegular()) : null;
+		this.fit= menu.getFit() != null ? new FitMealDTO(menu.getFit()) : null;
+		this.regular= menu.getRegular() != null ? new RegularMealDTO(menu.getRegular()) : null;
 		this.dessert=menu.getDessert() != null ? new ExtraDTO(menu.getDessert()) : null;
 		this.soup= menu.getExtrasSoup() != null ? new ExtraDTO(menu.getExtrasSoup()) : null;
 		this.idDailyMenu = menu.getId();

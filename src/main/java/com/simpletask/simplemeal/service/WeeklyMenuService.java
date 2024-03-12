@@ -23,8 +23,8 @@ public class WeeklyMenuService {
 	 public WeeklyMenuDTO getWeeklyMenuByStartDate() {
 		 Date startOfWeek = getStartOfWeek();
 		 Date endOfWeek = getEndOfWeek(startOfWeek);
-		 System.out.println(startOfWeek);
-		 System.out.println(endOfWeek);
+//		 System.out.println(startOfWeek);
+//		 System.out.println(endOfWeek);
 	     Optional<WeeklyMenu> optionalWeeklyMenu = weekRepo.findByStartDateBetween(startOfWeek, endOfWeek);
 		 return optionalWeeklyMenu.map(WeeklyMenuDTO::new).orElse(null);
 	 }
