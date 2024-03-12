@@ -1,9 +1,9 @@
 package com.simpletask.simplemeal.dto;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import com.simpletask.simplemeal.model.DailyMenu;
+import com.simpletask.simplemeal.model.MainCourse;
 
 
 public class DailyMenuDTO {
@@ -11,9 +11,9 @@ public class DailyMenuDTO {
 	
 	private String dateMenu;
 	
-	private MealsDTO regular;
+	private MainCourseDTO regular;
 	
-	private MealsDTO fit;
+	private MainCourseDTO fit;
 	
 	private ExtraDTO soup;
 	
@@ -21,8 +21,8 @@ public class DailyMenuDTO {
 
 	
 
-	public DailyMenuDTO(int idDailyMenu, String dateMenu, MealsDTO regular, MealsDTO fit, ExtraDTO soup,
-			ExtraDTO dessert) {
+	public DailyMenuDTO(int idDailyMenu, String dateMenu, MainCourseDTO regular, MainCourseDTO fit, ExtraDTO soup,
+						ExtraDTO dessert) {
 		super();
 		this.idDailyMenu = idDailyMenu;
 		this.dateMenu = dateMenu;
@@ -52,19 +52,19 @@ public class DailyMenuDTO {
 		this.dateMenu = dateMenu;
 	}
 
-	public MealsDTO getRegular() {
+	public MainCourseDTO getRegular() {
 		return regular;
 	}
 
-	public void setRegular(MealsDTO regular) {
+	public void setRegular(MainCourseDTO regular) {
 		this.regular = regular;
 	}
 
-	public MealsDTO getFit() {
+	public MainCourseDTO getFit() {
 		return fit;
 	}
 
-	public void setFit(MealsDTO fit) {
+	public void setFit(MainCourseDTO fit) {
 		this.fit = fit;
 	}
 
@@ -86,14 +86,14 @@ public class DailyMenuDTO {
 
 
 	public DailyMenuDTO(DailyMenu menu) {
-		this.idDailyMenu=menu.getIdDailyMenu();
+		this.idDailyMenu=menu.getId();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy.");
 		this.dateMenu= dateFormat.format(menu.getDate());
-		this.fit= menu.getFit() != null ? new MealsDTO(menu.getFit()) : null;
-		this.regular= menu.getRegular() != null ? new MealsDTO(menu.getRegular()) : null;
+		this.fit= menu.getFit() != null ? new MainCourseDTO(menu.getFit()) : null;
+		this.regular= menu.getRegular() != null ? new MainCourseDTO(menu.getRegular()) : null;
 		this.dessert=menu.getDessert() != null ? new ExtraDTO(menu.getDessert()) : null;
 		this.soup= menu.getExtrasSoup() != null ? new ExtraDTO(menu.getExtrasSoup()) : null;
-		this.idDailyMenu = menu.getIdDailyMenu();
+		this.idDailyMenu = menu.getId();
 	}
 	
 	

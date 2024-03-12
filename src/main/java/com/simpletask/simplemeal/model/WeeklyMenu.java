@@ -8,31 +8,31 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "weekly_menus")
 public class WeeklyMenu implements Serializable{
-
-	
-	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idWeeklyMenu;
+	private int id;
 
+	@Column(name = "daily_Menu")
 	@JsonIgnore
 	@OneToMany(targetEntity = DailyMenu.class, mappedBy = "weeklyMenu", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<DailyMenu> dailyMenu;
-	
+
+	@Column(name = "start_Date")
 	private Date startDate;
 
 	public WeeklyMenu() {
 		
 	}
 
-	public int getIdWeeklyMenu() {
-		return idWeeklyMenu;
+	public int getId() {
+		return id;
 	}
 
-	public void setIdWeeklyMenu(int idWeeklyMenu) {
-		this.idWeeklyMenu = idWeeklyMenu;
+	public void setId(int idWeeklyMenu) {
+		this.id = idWeeklyMenu;
 	}
 
 	public List<DailyMenu> getDailyMenu() {

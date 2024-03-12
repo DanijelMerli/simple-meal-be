@@ -1,7 +1,0 @@
-CREATE TABLE Extra (
-    id_Extra INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(300) NOT NULL,
-    description VARCHAR(300) NOT NULL,
-    extra_Type INT NOT NULL,
-    price DOUBLE NOT NULL
-);

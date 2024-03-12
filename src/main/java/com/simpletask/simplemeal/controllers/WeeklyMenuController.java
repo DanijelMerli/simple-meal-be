@@ -14,13 +14,13 @@ import com.simpletask.simplemeal.service.WeeklyMenuService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping("/api/meals")
+@RequestMapping("/api/auth/")
 public class WeeklyMenuController {
 	
 	@Autowired
 	WeeklyMenuService weekService;
 	
-	@GetMapping("/this-week")
+	@GetMapping("this-week")
     public ResponseEntity<WeeklyMenuDTO> getWeeklyMenu() {
         WeeklyMenuDTO weeklyMenuDTO = weekService.getWeeklyMenuByStartDate();
         if (weeklyMenuDTO != null) {
