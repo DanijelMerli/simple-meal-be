@@ -10,7 +10,7 @@ INSERT INTO meals (name, description) VALUES
       ('Avocado Soup', 'Fresh slices of avocado in soup'),
       ('Watermelon sugar', 'Your fave dessert you have never tried');
 
-INSERT INTO extras (extra_id, extra_type, price) VALUES
+INSERT INTO extras (id_extra, extra_type, price) VALUES
         (6, 1, 2.0),
          (7, 0, 1.5),
          (8, 0, 2.0),
@@ -18,9 +18,11 @@ INSERT INTO extras (extra_id, extra_type, price) VALUES
          (10, 1, 3.5);
 
 
-INSERT INTO main_courses (large_price, main_course_id, should_Order_Early, small_price, type_menu) VALUES
-           (18.0, 1, 0, 15.0, 0),
-           (28.0, 2, 1, 22.0, 1),
-           (20.0, 3, 0, 16.0, 0),
-           (30.0, 4, 1, 25.0, 1),
-           (35.0, 5, 1, 20.0, 1);
+INSERT INTO regular_meals (id_regular, small_price, large_price) VALUES
+           (1, 15.0, 30.0),
+           (3, 16.0, 32.0),
+           (5, 20.0, 40.0);
+
+INSERT INTO fit_meals (id_fit, price, should_Order_Early) VALUES
+             (2, 15.0, 1),
+             (4, 16.0, 0);

@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "extras")
-@PrimaryKeyJoinColumn(name = "extra_id")
+@PrimaryKeyJoinColumn(name = "id_extra")
 public class Extra extends Meal {
 
 //	@Id

@@ -1,9 +1,7 @@
 INSERT INTO weekly_menus (start_date)
-VALUES ('2024-03-11 00:00:00');
-INSERT INTO weekly_menus (start_date)
-VALUES ('2024-03-18 00:00:00');
-INSERT INTO weekly_menus (start_date)
-VALUES ('2024-03-25 00:00:00');
+VALUES ('2024-03-11 00:00:00'),
+        ('2024-03-18 00:00:00'),
+        ('2024-03-25 00:00:00');
 
 INSERT INTO daily_menus (fit, dessert, regular, weekly_menu, date_menu)
 VALUES (2, 6, 5, 1, '2024-03-11 00:00:00');

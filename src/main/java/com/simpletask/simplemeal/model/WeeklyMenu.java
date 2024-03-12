@@ -27,6 +27,17 @@ public class WeeklyMenu implements Serializable{
 		
 	}
 
+	public WeeklyMenu(int id, List<DailyMenu> dailyMenu, Date startDate) {
+		this.id = id;
+		this.dailyMenu = dailyMenu;
+		this.startDate = startDate;
+	}
+
+	public WeeklyMenu(List<DailyMenu> dailyMenu, Date startDate) {
+		this.dailyMenu = dailyMenu;
+		this.startDate = startDate;
+	}
+
 	public int getId() {
 		return id;
 	}
