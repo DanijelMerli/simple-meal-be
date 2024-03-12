@@ -2,7 +2,9 @@ package com.simpletask.simplemeal.service;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,8 @@ public class DailyMenuService {
 
 		if (isWeekend()) {
 			throw new Exception("Vikend je!");
+		} else if(isHoliday(today)) {
+			throw new Exception("Praznik je!");
 		}
 
 		Optional<DailyMenu> optionalDailyMenu = dailyRepo.findByDateMenu(today);
@@ -64,13 +68,33 @@ public class DailyMenuService {
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.DAY_OF_YEAR, 1);
 		calendar.get(Calendar.DAY_OF_MONTH);
-		int month = calendar.get(Calendar.MONTH) + 1; 
+		int month = calendar.get(Calendar.MONTH) + 1;
 		calendar.get(Calendar.YEAR);
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
 		calendar.set(Calendar.MILLISECOND, 0);
 		return calendar.getTime();
+	}
+
+	public static boolean isHoliday(Date date) {
+		Set<Date> praznici = new HashSet<>();
+
+		praznici.add(new Date(124, 0, 1)); 
+		praznici.add(new Date(124, 0, 2));
+		praznici.add(new Date(124, 0, 6));
+		praznici.add(new Date(124, 0, 7)); 
+		praznici.add(new Date(124, 1, 15));
+        praznici.add(new Date(124, 4, 1)); 
+        praznici.add(new Date(124, 10, 11));
+        if (praznici.contains(date)) {
+            System.out.println("Današnji datum je praznik.");
+            return true;
+        } else {
+            System.out.println("Današnji datum nije praznik.");
+            return false;
+        }
+        
 	}
 
 }

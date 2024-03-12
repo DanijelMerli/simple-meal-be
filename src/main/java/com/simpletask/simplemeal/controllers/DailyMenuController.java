@@ -13,7 +13,7 @@ import com.simpletask.simplemeal.service.DailyMenuService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping("/api/auth/")
+@RequestMapping("/api/meals/")
 public class DailyMenuController {
 	
 	@Autowired
