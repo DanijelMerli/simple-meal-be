@@ -7,7 +7,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.simpletask.simplemeal.dto.UserDTO;
 
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,15 +18,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
+@Table(name = "users")
 public class User implements Serializable, UserDetails{
-	
-
-//	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id_User")
-	private int idUser;
+	private int id;
 	
 	@Column(name="first_Name")
 	private String firstName;
@@ -60,12 +56,12 @@ public class User implements Serializable, UserDetails{
 	}
 	
 
-	public int getIdUser() {
-		return idUser;
+	public int getId() {
+		return id;
 	}
 
-	public void setIdUser(int idUser) {
-		this.idUser = idUser;
+	public void setId(int idUser) {
+		this.id = idUser;
 	}
 
 	public String getFirstName() {
@@ -110,7 +106,7 @@ public class User implements Serializable, UserDetails{
 
 	@Override
 	public String toString() {
-		return "User [id=" + this.idUser + ", name=" + firstName + ", surname=" + lastName + ", email=" + email + ", password="
+		return "User [id=" + this.id + ", name=" + firstName + ", surname=" + lastName + ", email=" + email + ", password="
 				+ password + ", role=" + role.toString() + ", accessToken=" + token + "]";
 	}
 

@@ -49,7 +49,7 @@ public class TokenUtils {
 				.setAudience(generateAudience())
 				.setIssuedAt(new Date())
 				.setExpiration(generateExpirationDate(EXPIRES_IN))
-				.claim("id", u.getIdUser())
+				.claim("id", u.getId())
 				.signWith(getSignInKey(), SIGNATURE_ALGORITHM).compact();
 	}
 	

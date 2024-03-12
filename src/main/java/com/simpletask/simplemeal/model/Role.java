@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import java.io.Serializable;
 
 @Entity
+@Table(name = "roles")
 public class Role implements GrantedAuthority, Serializable {
 
 	@Id

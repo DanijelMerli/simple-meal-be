@@ -1,26 +1,20 @@
 package com.simpletask.simplemeal.model;
 
-import java.io.Serializable;
-
 import com.simpletask.simplemeal.enums.ExtraType;
 
 import jakarta.persistence.*;
 
 @Entity
-public class Extra implements Serializable{
+@Table(name = "extras")
+@PrimaryKeyJoinColumn(name = "id_extra")
+public class Extra extends Meal {
 
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@Column(name = "extra_id", nullable = false)
+//	private int id;
 
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idExtra;
-
-	@Column(name = "name")
-	private String name;
-
-	private String description;
-	
+	@Column(name = "extra_type")
 	private ExtraType extraType;
 	
 	private double price;
@@ -29,39 +23,26 @@ public class Extra implements Serializable{
 		
 	}
 
-	public Extra(int idExtra, String name, String description, ExtraType extraType, double price) {
-		this.idExtra = idExtra;
-		this.name = name;
-		this.description = description;
+	public Extra(int id, String name, String description, ExtraType extraType, double price) {
+		super(id, name, description);
+//		this.id = id;
 		this.extraType = extraType;
 		this.price = price;
 	}
 
-	public String getName() {
-		return name;
+	public Extra(String name, String description, ExtraType extraType, double price) {
+		super(name, description);
+		this.extraType = extraType;
+		this.price = price;
 	}
 
-
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public int getIdExtra() {
-		return idExtra;
-	}
-
-	public void setIdExtra(int idExtra) {
-		this.idExtra = idExtra;
-	}
+//	public int getId() {
+//		return id;
+//	}
+//
+//	public void setId(int id) {
+//		this.id = id;
+//	}
 
 	public ExtraType getExtraType() {
 		return extraType;
@@ -78,10 +59,5 @@ public class Extra implements Serializable{
 	public void setPrice(double price) {
 		this.price = price;
 	}
-	
-	
-	
-	
-	
 
 }
