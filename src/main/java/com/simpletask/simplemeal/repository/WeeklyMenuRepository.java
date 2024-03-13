@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface WeeklyMenuRepository extends JpaRepository<WeeklyMenu, Integer>{
 
-	@Query(value = "SELECT * FROM weekly_menu w INNER JOIN daily_menu d on w.id_weekly_menu=d.weekly_menu WHERE start_date BETWEEN ?1 AND ?2", nativeQuery = true)
-	Optional<WeeklyMenu> findByStartDate(Date startDate, Date endDate);
+//	@Query(value = "SELECT start_date, dessert, fit, regular, soup, weekly_menu, date_menu, d.id FROM weekly_menus w INNER JOIN daily_menus d on w.id=d.weekly_menu WHERE start_date BETWEEN ?1 AND ?2", nativeQuery = true)
+	Optional<WeeklyMenu> findByStartDateBetween(Date startDate, Date endDate);
 
 }

@@ -7,24 +7,23 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "daily_menus")
 public class DailyMenu implements Serializable{
-
-
-	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idDailyMenu;
-	
+	private int id;
+
+	@Column(name = "date_Menu")
 	private Date dateMenu;
 
 	@ManyToOne
 	@JoinColumn(name = "regular")
-	private Meal regular;
+	private RegularMeal regular;
 
 	@ManyToOne
 	@JoinColumn(name = "fit")
-	private Meal fit;
+	private FitMeal fit;
 
 	@ManyToOne
 	@JoinColumn(name = "soup")
@@ -43,12 +42,31 @@ public class DailyMenu implements Serializable{
 		
 	}
 
-	public int getIdDailyMenu() {
-		return idDailyMenu;
+	public DailyMenu(int id, Date dateMenu, RegularMeal regular, FitMeal fit, Extra soup, Extra dessert, WeeklyMenu weeklyMenu) {
+		this.id = id;
+		this.dateMenu = dateMenu;
+		this.regular = regular;
+		this.fit = fit;
+		this.soup = soup;
+		this.dessert = dessert;
+		this.weeklyMenu = weeklyMenu;
 	}
 
-	public void setIdDailyMenu(int idDailyMenu) {
-		this.idDailyMenu = idDailyMenu;
+	public DailyMenu(Date dateMenu, RegularMeal regular, FitMeal fit, Extra soup, Extra dessert, WeeklyMenu weeklyMenu) {
+		this.dateMenu = dateMenu;
+		this.regular = regular;
+		this.fit = fit;
+		this.soup = soup;
+		this.dessert = dessert;
+		this.weeklyMenu = weeklyMenu;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int idDailyMenu) {
+		this.id = idDailyMenu;
 	}
 
 	public Date getDate() {
@@ -59,19 +77,19 @@ public class DailyMenu implements Serializable{
 		this.dateMenu = dateMenu;
 	}
 
-	public Meal getRegular() {
+	public RegularMeal getRegular() {
 		return regular;
 	}
 
-	public void setRegular(Meal regular) {
+	public void setRegular(RegularMeal regular) {
 		this.regular = regular;
 	}
 
-	public Meal getFit() {
+	public FitMeal getFit() {
 		return fit;
 	}
 
-	public void setFit(Meal fit) {
+	public void setFit(FitMeal fit) {
 		this.fit = fit;
 	}
 
