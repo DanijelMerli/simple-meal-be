@@ -3,6 +3,7 @@ package com.simpletask.simplemeal.dto;
 import java.text.SimpleDateFormat;
 
 import com.simpletask.simplemeal.model.DailyMenu;
+import com.simpletask.simplemeal.model.MainCourse;
 
 
 public class DailyMenuDTO {
