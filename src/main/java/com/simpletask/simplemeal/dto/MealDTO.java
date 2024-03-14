@@ -1,6 +1,6 @@
 package com.simpletask.simplemeal.dto;
 
-import com.simpletask.simplemeal.model.MainCourse;
+import com.simpletask.simplemeal.model.Meal;
 
 public class MealDTO {
 	
@@ -56,7 +56,7 @@ public class MealDTO {
 		this.description = description;
 	}
 
-	public MealDTO(MainCourse meal) {
+	public MealDTO(Meal meal) {
 		this.id = meal.getId();
 		this.name = meal.getName();
 		this.description = meal.getDescription();
