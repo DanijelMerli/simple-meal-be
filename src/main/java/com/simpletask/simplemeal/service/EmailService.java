@@ -19,7 +19,7 @@ public class EmailService implements IEmailService {
     @Autowired
     private UserRepository userRepository;
 
-    @Scheduled(cron = "0 */1 * * * ?") //0 0 8 ? * MON-FRI
+    @Scheduled(cron = "0 0 8 ? * MON-FRI") 
     public void sendEmail() {
         List<User> users = userRepository.findAll();
         for (User user : users) {
