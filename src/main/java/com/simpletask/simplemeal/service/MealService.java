@@ -116,5 +116,41 @@ public class MealService implements IMealService {
         return new Extra(dto.getName(), dto.getDescription(), ExtraType.valueOf(dto.getExtraType()), dto.getPrice());
     }
 
+    @Override
+    public RegularMealDTO editRegularMeal(CreateRegularMealDTO dto, int id) {
+        RegularMeal regularMeal = regularMealRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Regular meal not found"));
+        regularMeal.setName(dto.getName());
+        regularMeal.setDescription(dto.getDescription());
+        regularMeal.setLargePrice(dto.getLargePrice());
+        regularMeal.setSmallPrice(dto.getSmallPrice());
+        regularMeal = regularMealRepository.saveAndFlush(regularMeal);
+        return new RegularMealDTO(regularMeal);
+    }
+
+    @Override
+    public FitMealDTO editFitMeal(CreateFitMealDTO dto, int id) {
+        FitMeal fitMeal = fitMealRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Fit meal not found"));
+        fitMeal.setName(dto.getName());
+        fitMeal.setDescription(dto.getDescription());
+        fitMeal.setPrice(dto.getPrice());
+        fitMeal.setShouldOrderEarly(dto.isShouldOrderEarly());
+        fitMeal = fitMealRepository.saveAndFlush(fitMeal);
+        return new FitMealDTO(fitMeal);
+    }
+
+    @Override
+    public ExtraDTO editExtraMeal(CreateExtraDTO dto, int id) {
+        Extra extra = extraRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Extra not found"));
+        extra.setName(dto.getName());
+        extra.setDescription(dto.getDescription());
+        extra.setPrice(dto.getPrice());
+        extra.setExtraType(ExtraType.valueOf(dto.getExtraType()));
+        extra = extraRepository.saveAndFlush(extra);
+        return new ExtraDTO(extra);
+    }
+
 
 }

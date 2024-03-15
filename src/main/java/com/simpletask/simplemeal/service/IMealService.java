@@ -10,4 +10,8 @@ public interface IMealService {
     RegularMealDTO addRegularMeal(CreateRegularMealDTO dto);
     FitMealDTO addFitMeal(CreateFitMealDTO dto);
     ExtraDTO addExtraMeal(CreateExtraDTO dto);
+
+    RegularMealDTO editRegularMeal(CreateRegularMealDTO dto, int id);
+    FitMealDTO editFitMeal(CreateFitMealDTO dto, int id);
+    ExtraDTO editExtraMeal(CreateExtraDTO dto, int id);
 }

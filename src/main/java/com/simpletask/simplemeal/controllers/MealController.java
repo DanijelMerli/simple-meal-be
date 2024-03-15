@@ -3,6 +3,7 @@ package com.simpletask.simplemeal.controllers;
 import com.simpletask.simplemeal.dto.*;
 import com.simpletask.simplemeal.service.IMealService;
 import jakarta.validation.Valid;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,5 +38,20 @@ public class MealController {
     @PostMapping("/extra")
     public ResponseEntity<ExtraDTO> addFitMeal(@Valid @RequestBody CreateExtraDTO dto, BindingResult bindingResult) {
         return new ResponseEntity<ExtraDTO>(mealService.addExtraMeal(dto), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/regular/{id}")
+    public ResponseEntity<RegularMealDTO> editRegularMeal(@PathVariable("id") int id, @Valid @RequestBody CreateRegularMealDTO dto, BindingResult bindingResult) {
+        return new ResponseEntity<RegularMealDTO>(mealService.editRegularMeal(dto, id), HttpStatus.OK);
+    }
+
+    @PutMapping("/fit/{id}")
+    public ResponseEntity<FitMealDTO> editFitMeal(@PathVariable("id") int id, @Valid @RequestBody CreateFitMealDTO dto, BindingResult bindingResult) {
+        return new ResponseEntity<FitMealDTO>(mealService.editFitMeal(dto, id), HttpStatus.OK);
+    }
+
+    @PutMapping("/extra/{id}")
+    public ResponseEntity<ExtraDTO> editFitMeal(@PathVariable("id") int id, @Valid @RequestBody CreateExtraDTO dto, BindingResult bindingResult) {
+        return new ResponseEntity<ExtraDTO>(mealService.editExtraMeal(dto, id), HttpStatus.OK);
     }
 }
