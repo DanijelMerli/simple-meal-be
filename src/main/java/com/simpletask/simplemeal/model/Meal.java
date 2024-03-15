@@ -2,73 +2,51 @@ package com.simpletask.simplemeal.model;
 
 import java.io.Serializable;
 
-import com.simpletask.simplemeal.enums.MealSize;
 import com.simpletask.simplemeal.enums.MealType;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "meals")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Meal implements Serializable{
-
-
-	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idFoodMenu;
+	private int id;
 	
 	private String name;
 	
-	private MealType typeMenu;
-	
-	private double largePrice;
-	
-	private double smallPrice;
-	
 	private String description;
-	
-	private boolean shouldOrderEarly;
-	
 	
 	public Meal() {
 	}
-	
-	
-	
-		
+
+	public Meal(int id, String name, String description) {
+		this.id = id;
+		this.name = name;
+		this.description = description;
+	}
+
+	public Meal(String name, String description) {
+		this.name = name;
+		this.description = description;
+	}
 
 	public String getName() {
 		return name;
 	}
 
-
-
-
-
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	
-	
-
-	public int getIdFoodMenu() {
-		return idFoodMenu;
+	public int getId() {
+		return id;
 	}
 
-	public void setIdFoodMenu(int idFoodMenu) {
-		this.idFoodMenu = idFoodMenu;
-	}
-
-	public MealType getTypeMenu() {
-		return typeMenu;
-	}
-
-	public void setTypeMenu(MealType typeMenu) {
-		this.typeMenu = typeMenu;
+	public void setId(int idFoodMenu) {
+		this.id = idFoodMenu;
 	}
 
 
@@ -79,55 +57,5 @@ public class Meal implements Serializable{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-
-
-
-
-	public double getLargePrice() {
-		return largePrice;
-	}
-
-
-
-
-
-	public void setLargePrice(double largePrice) {
-		this.largePrice = largePrice;
-	}
-
-
-
-
-
-	public double getSmallPrice() {
-		return smallPrice;
-	}
-
-
-
-
-
-	public void setSmallPrice(double smallPrice) {
-		this.smallPrice = smallPrice;
-	}
-
-
-
-
-
-	public boolean isShouldOrderEarly() {
-		return shouldOrderEarly;
-	}
-
-
-
-
-
-	public void setShouldOrderEarly(boolean shouldOrderEarly) {
-		this.shouldOrderEarly = shouldOrderEarly;
-	}
-	
-	
 	
 }

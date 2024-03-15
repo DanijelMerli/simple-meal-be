@@ -1,12 +1,15 @@
 package com.simpletask.simplemeal.exception;
 
 
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -34,6 +37,32 @@ public class GlobalExceptionHandler {
     		ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), HttpStatus.CONFLICT.value());
            return new ResponseEntity<>(errorResponse,HttpStatus.CONFLICT);  
     	
+    }
+
+    private ResponseEntity<ErrorResponse> getErrorResponseResponseEntity(ValidationException e) {
+        String prefixToRemove = "addOrder.dto.";
+        String message = e.getMessage();
+        ErrorResponse errorResponse;
+        if (message.startsWith(prefixToRemove)) {
+            errorResponse = new ErrorResponse(message.replaceAll("addOrder\\.dto\\.", ""), HttpStatus.BAD_REQUEST.value());
+        } else {
+            errorResponse = new ErrorResponse(e.getMessage(), HttpStatus.BAD_REQUEST.value());
+        }
+        return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({ValidationException.class})
+    public ResponseEntity<ErrorResponse> exceptionHandler(ValidationException e) {
+        return getErrorResponseResponseEntity(e);
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ErrorResponse> exceptionHandler(ConstraintViolationException e) {
+        return getErrorResponseResponseEntity(e);
     }
 }
 

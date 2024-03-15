@@ -1,1 +1,0 @@
- create table weekly_menu (id_weekly_menu integer not null auto_increment, start_date datetime(6), primary key (id_weekly_menu));

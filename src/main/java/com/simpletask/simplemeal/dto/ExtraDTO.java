@@ -4,7 +4,7 @@ import com.simpletask.simplemeal.model.Extra;
 
 public class ExtraDTO {
 	
-	private int idExtra;
+	private int id;
 	
 	private String name;
 	
@@ -20,19 +20,19 @@ public class ExtraDTO {
 
 	public ExtraDTO(int idExtra, String name, String extraType, double price, String description) {
 		super();
-		this.idExtra = idExtra;
+		this.id = idExtra;
 		this.name = name;
 		this.description = description;
 		this.extraType = extraType;
 		this.price = price;
 	}
 
-	public int getIdExtra() {
-		return idExtra;
+	public int getId() {
+		return id;
 	}
 
-	public void setIdExtra(int idExtra) {
-		this.idExtra = idExtra;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -69,7 +69,7 @@ public class ExtraDTO {
 	}
 
 	public ExtraDTO(Extra extra) {
-		this.idExtra = extra.getIdExtra();
+		this.id = extra.getId();
 		this.extraType = extra.getExtraType().toString();
 		this.name = extra.getName();
 		this.description = extra.getDescription();

@@ -83,7 +83,7 @@ public class UserService implements IUserService {
 
     public User registerUser(UserDTO userDTO) throws Exception  {
 
-        User user = new User(userDTO);
+        User user = getUserFromDTO(userDTO);
         if (userRepo.existsByEmail(user.getEmail()))
             return null;
         String password =hashPassword(userDTO.getPassword());
@@ -99,13 +99,23 @@ public class UserService implements IUserService {
         return passwordEncoder.matches(password, hashedPassword);
     }
 
-    private User convertUserToUserDTO(User user) {
-        UserDTO userDTO = new UserDTO();
-        userDTO.setFirstName(user.getFirstName());
-        userDTO.setLastName(user.getLastName());
-        userDTO.setEmail(user.getEmail());
-        userDTO.setPassword(user.getPassword());
-        return user;
+    
+    private User getUserFromDTO(UserDTO userDTO) {
+    	User user = new User();
+    	user.setFirstName(userDTO.getFirstName());
+    	user.setLastName(userDTO.getLastName());
+    	user.setEmail(userDTO.getEmail());
+    	user.setPassword(userDTO.getPassword());
+    	user.setRole(roleRepository.findById(1).get());
+    	return user;
+    	
+    }
+    private UserDTO convertUserToDTO(User user) {
+    	 UserDTO userDTO = new UserDTO();
+         userDTO.setFirstName(user.getFirstName());
+         userDTO.setLastName(user.getLastName());
+         userDTO.setEmail(user.getEmail());
+         return userDTO;
     }
 
 
