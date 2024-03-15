@@ -1,16 +1,17 @@
 package com.simpletask.simplemeal.service;
 
-import com.simpletask.simplemeal.dto.AllMealsDTO;
-import com.simpletask.simplemeal.dto.ExtraDTO;
-import com.simpletask.simplemeal.dto.FitMealDTO;
-import com.simpletask.simplemeal.dto.RegularMealDTO;
+import com.simpletask.simplemeal.dto.*;
+import com.simpletask.simplemeal.enums.ExtraType;
 import com.simpletask.simplemeal.enums.MealSize;
 import com.simpletask.simplemeal.exception.NotFoundException;
 import com.simpletask.simplemeal.model.Extra;
 import com.simpletask.simplemeal.model.FitMeal;
 import com.simpletask.simplemeal.model.Meal;
 import com.simpletask.simplemeal.model.RegularMeal;
+import com.simpletask.simplemeal.repository.ExtraRepository;
+import com.simpletask.simplemeal.repository.FitMealRepository;
 import com.simpletask.simplemeal.repository.MealRepository;
+import com.simpletask.simplemeal.repository.RegularMealRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,15 @@ public class MealService implements IMealService {
 
     @Autowired
     private MealRepository mealRepository;
+
+    @Autowired
+    private RegularMealRepository regularMealRepository;
+
+    @Autowired
+    private FitMealRepository fitMealRepository;
+
+    @Autowired
+    private ExtraRepository extraRepository;
 
     public double calculatePriceByMeal(Integer id, MealSize mealSize) {
         Meal meal = mealRepository.findById(id)
@@ -72,4 +82,39 @@ public class MealService implements IMealService {
 
         return allMeals;
     }
+
+    @Override
+    public RegularMealDTO addRegularMeal(CreateRegularMealDTO dto) {
+        RegularMeal regularMeal = convertRegularMealDTOtoModel(dto);
+        regularMeal = regularMealRepository.saveAndFlush(regularMeal);
+        return new RegularMealDTO(regularMeal);
+    }
+
+    private RegularMeal convertRegularMealDTOtoModel(CreateRegularMealDTO dto) {
+        return new RegularMeal(dto.getName(), dto.getDescription(), dto.getLargePrice(), dto.getSmallPrice());
+    }
+
+    @Override
+    public FitMealDTO addFitMeal(CreateFitMealDTO dto) {
+        FitMeal fitMeal = convertFitMealDTOtoModel(dto);
+        fitMeal = fitMealRepository.saveAndFlush(fitMeal);
+        return new FitMealDTO(fitMeal);
+    }
+
+    private FitMeal convertFitMealDTOtoModel(CreateFitMealDTO dto) {
+        return new FitMeal(dto.getName(), dto.getDescription(), dto.getPrice(), dto.isShouldOrderEarly());
+    }
+
+    @Override
+    public ExtraDTO addExtraMeal(CreateExtraDTO dto) {
+        Extra extra = convertExtraMealDTOtoModel(dto);
+        extra = extraRepository.saveAndFlush(extra);
+        return new ExtraDTO(extra);
+    }
+
+    private Extra convertExtraMealDTOtoModel(CreateExtraDTO dto) {
+        return new Extra(dto.getName(), dto.getDescription(), ExtraType.valueOf(dto.getExtraType()), dto.getPrice());
+    }
+
+
 }
