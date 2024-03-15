@@ -14,4 +14,6 @@ public interface IMealService {
     RegularMealDTO editRegularMeal(CreateRegularMealDTO dto, int id);
     FitMealDTO editFitMeal(CreateFitMealDTO dto, int id);
     ExtraDTO editExtraMeal(CreateExtraDTO dto, int id);
+
+    void deleteMeal(int id);
 }

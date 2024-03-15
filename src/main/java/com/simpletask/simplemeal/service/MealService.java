@@ -4,14 +4,8 @@ import com.simpletask.simplemeal.dto.*;
 import com.simpletask.simplemeal.enums.ExtraType;
 import com.simpletask.simplemeal.enums.MealSize;
 import com.simpletask.simplemeal.exception.NotFoundException;
-import com.simpletask.simplemeal.model.Extra;
-import com.simpletask.simplemeal.model.FitMeal;
-import com.simpletask.simplemeal.model.Meal;
-import com.simpletask.simplemeal.model.RegularMeal;
-import com.simpletask.simplemeal.repository.ExtraRepository;
-import com.simpletask.simplemeal.repository.FitMealRepository;
-import com.simpletask.simplemeal.repository.MealRepository;
-import com.simpletask.simplemeal.repository.RegularMealRepository;
+import com.simpletask.simplemeal.model.*;
+import com.simpletask.simplemeal.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +27,9 @@ public class MealService implements IMealService {
 
     @Autowired
     private ExtraRepository extraRepository;
+
+    @Autowired
+    private DailyMenuRepository dailyMenuRepository;
 
     public double calculatePriceByMeal(Integer id, MealSize mealSize) {
         Meal meal = mealRepository.findById(id)
@@ -150,6 +147,39 @@ public class MealService implements IMealService {
         extra.setExtraType(ExtraType.valueOf(dto.getExtraType()));
         extra = extraRepository.saveAndFlush(extra);
         return new ExtraDTO(extra);
+    }
+
+    @Override
+    public void deleteMeal(int id) {
+        Meal meal = mealRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Meal not found"));
+        List<DailyMenu> dailyMenus = new ArrayList<>();
+        if (meal instanceof RegularMeal regularMeal) {
+            dailyMenus = dailyMenuRepository.findAllByRegular(regularMeal);
+            dailyMenus.forEach(dm -> dm.setRegular(null));
+            dailyMenuRepository.saveAllAndFlush(dailyMenus);
+            regularMealRepository.delete(regularMeal);
+        } else if (meal instanceof FitMeal fitMeal) {
+            dailyMenus = dailyMenuRepository.findAllByFit(fitMeal);
+            dailyMenus.forEach(dm -> dm.setFit(null));
+            dailyMenuRepository.saveAllAndFlush(dailyMenus);
+            fitMealRepository.delete(fitMeal);
+        } else if (meal instanceof Extra extra) {
+            if (extra.getExtraType() == ExtraType.SOUP) {
+                dailyMenus = dailyMenuRepository.findAllBySoup(extra);
+                dailyMenus.forEach(dm -> dm.setSoup(null));
+                dailyMenuRepository.saveAllAndFlush(dailyMenus);
+            } else if (extra.getExtraType() == ExtraType.DESSERT) {
+                dailyMenus = dailyMenuRepository.findAllByDessert(extra);
+                dailyMenus.forEach(dm -> dm.setDessert(null));
+                dailyMenuRepository.saveAllAndFlush(dailyMenus);
+            } else {
+                throw new NotFoundException("Extra type not found");
+            }
+            extraRepository.delete(extra);
+        } else {
+            throw new NotFoundException("Meal type not found");
+        }
     }
 
 

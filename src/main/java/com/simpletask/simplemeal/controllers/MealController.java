@@ -54,4 +54,10 @@ public class MealController {
     public ResponseEntity<ExtraDTO> editFitMeal(@PathVariable("id") int id, @Valid @RequestBody CreateExtraDTO dto, BindingResult bindingResult) {
         return new ResponseEntity<ExtraDTO>(mealService.editExtraMeal(dto, id), HttpStatus.OK);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteMeal(@PathVariable("id") int id) {
+        this.mealService.deleteMeal(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
