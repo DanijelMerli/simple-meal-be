@@ -14,9 +14,9 @@ import com.simpletask.simplemeal.repository.MealRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MealService implements IMealService {
@@ -45,48 +45,31 @@ public class MealService implements IMealService {
         throw new NotFoundException("Unknown subclass type for Meal with ID: " + id);
     }
 
-//    java 8- neclean verzija ko voli
-//    public double calculatePriceByMeal(Integer id, MealSize mealSize) {
-//        Meal meal = mealRepository.findById(id)
-//                .orElseThrow(() -> new NotFoundException("Meal not found"));
-//        if (meal instanceof RegularMeal) {
-//            RegularMeal rm = regularMealRepository.findById(id)
-//                    .orElseThrow(() -> new NotFoundException("Regular Meal not found"));
-//            if (mealSize.equals(MealSize.Large)) {
-//                return rm.getLargePrice();
-//            }
-//            return rm.getSmallPrice();
-//        } else if (meal instanceof FitMeal) {
-//            FitMeal fm = fitMealRepository.findById(id)
-//                    .orElseThrow(() -> new NotFoundException("Fit Meal not found"));
-//            return fm.getPrice();
-//        } else if (meal instanceof Extra) {
-//            Extra e = extraRepository.findById(id)
-//                    .orElseThrow(() -> new NotFoundException("Extra Meal not found"));
-//            return e.getPrice();
-//        } else {
-//            throw new NotFoundException("Unknown subclass type for Meal with ID: " + id);
-//        }
-//    }
-
     @Override
     public AllMealsDTO getAllMeals() {
         List<Meal> meals = mealRepository.findAll();
-//        for (Meal meal : meals) {
-//            System.out.println(meal.toString());
-//        }
-        AllMealsDTO allMeals = new AllMealsDTO(new ArrayList<RegularMealDTO>(), new ArrayList<FitMealDTO>(), new ArrayList<ExtraDTO>());
-        for (Meal meal : meals) {
-             if (meal instanceof RegularMeal) {
-                 allMeals.getRegularMeals().add(new RegularMealDTO((RegularMeal) meal));
-             } else if (meal instanceof FitMeal) {
-                 allMeals.getFitMeals().add(new FitMealDTO((FitMeal) meal));
-             } else if (meal instanceof Extra) {
-                 allMeals.getExtras().add(new ExtraDTO((Extra) meal));
-             } else {
-                 throw new NotFoundException("Meal not found");
-             }
+
+        List<RegularMealDTO> regularMeals = meals.stream()
+                .filter(meal -> meal instanceof RegularMeal)
+                .map(meal -> new RegularMealDTO((RegularMeal) meal))
+                .collect(Collectors.toList());
+
+        List<FitMealDTO> fitMeals = meals.stream()
+                .filter(meal -> meal instanceof FitMeal)
+                .map(meal -> new FitMealDTO((FitMeal) meal))
+                .collect(Collectors.toList());
+
+        List<ExtraDTO> extras = meals.stream()
+                .filter(meal -> meal instanceof Extra)
+                .map(meal -> new ExtraDTO((Extra) meal))
+                .collect(Collectors.toList());
+
+        AllMealsDTO allMeals = new AllMealsDTO((ArrayList<RegularMealDTO>) regularMeals, (ArrayList<FitMealDTO>) fitMeals, (ArrayList<ExtraDTO>) extras);
+
+        if (regularMeals.size() + fitMeals.size() + extras.size() != meals.size()) { // protiv uroka
+            throw new NotFoundException("Meal not found");
         }
+
         return allMeals;
     }
 }
