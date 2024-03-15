@@ -51,4 +51,15 @@ public class RegularMeal extends Meal {
     public void setSmallPrice(double smallPrice) {
         this.smallPrice = smallPrice;
     }
+
+    @Override
+    public String toString() {
+        return "RegularMeal{" +
+                "id=" + super.getId() +
+                ", name='" + super.getName() + '\'' +
+                ", description='" + super.getDescription() + '\'' +
+                "largePrice=" + largePrice +
+                ", smallPrice=" + smallPrice +
+                '}';
+    }
 }

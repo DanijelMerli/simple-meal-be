@@ -1,5 +1,9 @@
 package com.simpletask.simplemeal.service;
 
+import com.simpletask.simplemeal.dto.AllMealsDTO;
+import com.simpletask.simplemeal.dto.ExtraDTO;
+import com.simpletask.simplemeal.dto.FitMealDTO;
+import com.simpletask.simplemeal.dto.RegularMealDTO;
 import com.simpletask.simplemeal.enums.MealSize;
 import com.simpletask.simplemeal.exception.NotFoundException;
 import com.simpletask.simplemeal.model.Extra;
@@ -9,6 +13,10 @@ import com.simpletask.simplemeal.model.RegularMeal;
 import com.simpletask.simplemeal.repository.MealRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class MealService implements IMealService {
@@ -60,4 +68,25 @@ public class MealService implements IMealService {
 //            throw new NotFoundException("Unknown subclass type for Meal with ID: " + id);
 //        }
 //    }
+
+    @Override
+    public AllMealsDTO getAllMeals() {
+        List<Meal> meals = mealRepository.findAll();
+//        for (Meal meal : meals) {
+//            System.out.println(meal.toString());
+//        }
+        AllMealsDTO allMeals = new AllMealsDTO(new ArrayList<RegularMealDTO>(), new ArrayList<FitMealDTO>(), new ArrayList<ExtraDTO>());
+        for (Meal meal : meals) {
+             if (meal instanceof RegularMeal) {
+                 allMeals.getRegularMeals().add(new RegularMealDTO((RegularMeal) meal));
+             } else if (meal instanceof FitMeal) {
+                 allMeals.getFitMeals().add(new FitMealDTO((FitMeal) meal));
+             } else if (meal instanceof Extra) {
+                 allMeals.getExtras().add(new ExtraDTO((Extra) meal));
+             } else {
+                 throw new NotFoundException("Meal not found");
+             }
+        }
+        return allMeals;
+    }
 }

@@ -60,4 +60,14 @@ public class Extra extends Meal {
 		this.price = price;
 	}
 
+	@Override
+	public String toString() {
+		return "Extra{" +
+				"id=" + super.getId() +
+				", name='" + super.getName() + '\'' +
+				", description='" + super.getDescription() + '\'' +
+				"extraType=" + extraType +
+				", price=" + price +
+				'}';
+	}
 }

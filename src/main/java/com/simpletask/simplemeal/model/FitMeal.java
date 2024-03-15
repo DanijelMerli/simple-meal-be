@@ -50,4 +50,15 @@ public class FitMeal extends Meal {
     public void setShouldOrderEarly(boolean shouldOrderEarly) {
         this.shouldOrderEarly = shouldOrderEarly;
     }
+
+    @Override
+    public String toString() {
+        return "FitMeal{" +
+                "id=" + super.getId() +
+                ", name='" + super.getName() + '\'' +
+                ", description='" + super.getDescription() + '\'' +
+                "price=" + price +
+                ", shouldOrderEarly=" + shouldOrderEarly +
+                '}';
+    }
 }
