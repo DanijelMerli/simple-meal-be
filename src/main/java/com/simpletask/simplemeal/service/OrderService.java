@@ -1,17 +1,13 @@
 package com.simpletask.simplemeal.service;
 
 import com.simpletask.simplemeal.dto.OrderDTO;
-import com.simpletask.simplemeal.model.Meal;
 import com.simpletask.simplemeal.model.Order;
 import com.simpletask.simplemeal.model.OrderItem;
 import com.simpletask.simplemeal.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class OrderService implements IOrderService {
@@ -27,22 +23,28 @@ public class OrderService implements IOrderService {
 
     @Override
     public void addOrder(OrderDTO dto, String userEmail) {
-        Order order = convertDTOtoModel(dto, userEmail);
-        order.setOrderItems(new ArrayList<>());
-        order = orderRepository.saveAndFlush(order);
         List<OrderItem> orderItemList = orderItemService.convertDTOListToModelList(dto.getOrderItems(), userEmail);
+        Optional<Order> orderOpt = findByDate(dto.isForToday() ? getDate(new Date()) : getDate(getTomorrow()));
+        Order order = orderOpt.orElseGet(() -> {
+            Order newOrder = convertDTOtoModel(dto, userEmail);
+            newOrder.setTotalPrice(calculateTotalPrice(orderItemList));
+            newOrder.setOrderItems(new ArrayList<>());
+            return addOrder(newOrder);
+        });
         for (OrderItem item : orderItemList) {
             item.setOrder(order);
             this.orderItemService.addOrderItem(item);
         }
     }
 
+    @Override
+    public Order addOrder(Order order) {
+        return orderRepository.saveAndFlush(order);
+    }
+
     public Order convertDTOtoModel(OrderDTO dto, String userEmail) {
         Order order = new Order();
-        List<OrderItem> orderItemList = orderItemService.convertDTOListToModelList(dto.getOrderItems(), userEmail);
-        order.setOrderItems(orderItemList);
-        order.setTotalPrice(calculateTotalPrice(orderItemList));
-        order.setDate(dto.isForToday() ? new Date() : getTomorrow());
+        order.setDate(dto.isForToday() ? getDate(new Date()) : getDate(getTomorrow()));
         return order;
     }
 
@@ -60,4 +62,18 @@ public class OrderService implements IOrderService {
         return calendar.getTime();
     }
 
+    @Override
+    public Optional<Order> findByDate(Date date) {
+        return orderRepository.findByDate(date);
+    }
+
+    private Date getDate(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTime();
+    }
 }
