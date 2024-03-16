@@ -36,7 +36,7 @@ public class MealController {
     }
 
     @PostMapping("/extra")
-    public ResponseEntity<ExtraDTO> addFitMeal(@Valid @RequestBody CreateExtraDTO dto, BindingResult bindingResult) {
+    public ResponseEntity<ExtraDTO> addExtraMeal(@Valid @RequestBody CreateExtraDTO dto, BindingResult bindingResult) {
         return new ResponseEntity<ExtraDTO>(mealService.addExtraMeal(dto), HttpStatus.CREATED);
     }
 
@@ -51,7 +51,7 @@ public class MealController {
     }
 
     @PutMapping("/extra/{id}")
-    public ResponseEntity<ExtraDTO> editFitMeal(@PathVariable("id") int id, @Valid @RequestBody CreateExtraDTO dto, BindingResult bindingResult) {
+    public ResponseEntity<ExtraDTO> editExtraMeal(@PathVariable("id") int id, @Valid @RequestBody CreateExtraDTO dto, BindingResult bindingResult) {
         return new ResponseEntity<ExtraDTO>(mealService.editExtraMeal(dto, id), HttpStatus.OK);
     }
 
