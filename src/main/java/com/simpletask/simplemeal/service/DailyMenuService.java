@@ -50,10 +50,10 @@ public class DailyMenuService {
 		calendar.add(Calendar.DAY_OF_YEAR, 1);
 		int danUNedelji = calendar.get(Calendar.DAY_OF_WEEK);
 		if (danUNedelji == Calendar.SATURDAY || danUNedelji == Calendar.SUNDAY) {
-			System.out.println("Danas je vikend.");
+			System.out.println("Sutra je vikend.");
 			return true;
 		} else {
-			System.out.println("Danas je radni dan.");
+			System.out.println("Sutra je radni dan.");
 			return false;
 		}
 	}
