@@ -44,6 +44,19 @@ public class DailyMenuService {
 			return false;
 		}
 	}
+	
+	public static boolean isWeekendTomorrow() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DAY_OF_YEAR, 1);
+		int danUNedelji = calendar.get(Calendar.DAY_OF_WEEK);
+		if (danUNedelji == Calendar.SATURDAY || danUNedelji == Calendar.SUNDAY) {
+			System.out.println("Danas je vikend.");
+			return true;
+		} else {
+			System.out.println("Danas je radni dan.");
+			return false;
+		}
+	}
 
 	public static Date getToday() {
 		Calendar calendar = Calendar.getInstance();
@@ -57,7 +70,7 @@ public class DailyMenuService {
 	public DailyMenuDTO getDailyMenuForTomorrow() throws Exception {
 		Date tomorrow = getTomorrow();
 		System.out.println(tomorrow);
-		if (isWeekend()) {
+		if (isWeekendTomorrow()) {
 			throw new Exception("Vikend je!");
 		}
 		Optional<DailyMenu> optionalDailyMenu = dailyRepo.findByDateMenu(tomorrow);
