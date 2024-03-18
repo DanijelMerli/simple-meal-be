@@ -91,7 +91,7 @@ public class DailyMenuDTO {
 		this.fit= menu.getFit() != null ? new FitMealDTO(menu.getFit()) : null;
 		this.regular= menu.getRegular() != null ? new RegularMealDTO(menu.getRegular()) : null;
 		this.dessert=menu.getDessert() != null ? new ExtraDTO(menu.getDessert()) : null;
-		this.soup= menu.getExtrasSoup() != null ? new ExtraDTO(menu.getExtrasSoup()) : null;
+		this.soup= menu.getSoup() != null ? new ExtraDTO(menu.getSoup()) : null;
 		this.idDailyMenu = menu.getId();
 	}
 	

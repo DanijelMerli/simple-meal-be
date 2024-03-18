@@ -93,11 +93,11 @@ public class DailyMenu implements Serializable{
 		this.fit = fit;
 	}
 
-	public Extra getExtrasSoup() {
+	public Extra getSoup() {
 		return soup;
 	}
 
-	public void setExtrasSoup(Extra soup) {
+	public void setSoup(Extra soup) {
 		this.soup = soup;
 	}
 
@@ -108,7 +108,17 @@ public class DailyMenu implements Serializable{
 	public void setDessert(Extra dessert) {
 		this.dessert = dessert;
 	}
-	
-	
-	
+
+	@Override
+	public String toString() {
+		return "DailyMenu{" +
+				"id=" + id +
+				", dateMenu=" + dateMenu +
+				", regular=" + regular +
+				", fit=" + fit +
+				", soup=" + soup +
+				", dessert=" + dessert +
+				", weeklyMenu=" + weeklyMenu +
+				'}';
+	}
 }
