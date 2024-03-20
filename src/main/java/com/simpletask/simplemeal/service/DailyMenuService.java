@@ -50,10 +50,10 @@ public class DailyMenuService {
 		calendar.add(Calendar.DAY_OF_YEAR, 1);
 		int danUNedelji = calendar.get(Calendar.DAY_OF_WEEK);
 		if (danUNedelji == Calendar.SATURDAY || danUNedelji == Calendar.SUNDAY) {
-			System.out.println("Danas je vikend.");
+			System.out.println("Sutra je vikend.");
 			return true;
 		} else {
-			System.out.println("Danas je radni dan.");
+			System.out.println("Sutra je radni dan.");
 			return false;
 		}
 	}
@@ -72,6 +72,8 @@ public class DailyMenuService {
 		System.out.println(tomorrow);
 		if (isWeekendTomorrow()) {
 			throw new Exception("Vikend je!");
+		} else if (isHoliday(tomorrow)) {
+			throw new Exception("Praznik je!");
 		}
 		Optional<DailyMenu> optionalDailyMenu = dailyRepo.findByDateMenu(tomorrow);
 		return optionalDailyMenu.map(DailyMenuDTO::new).orElse(null);
@@ -101,10 +103,10 @@ public class DailyMenuService {
         praznici.add(new Date(124, 4, 1)); 
         praznici.add(new Date(124, 10, 11));
         if (praznici.contains(date)) {
-            System.out.println("Današnji datum je praznik.");
+            System.out.println("Ovaj datum je praznik.");
             return true;
         } else {
-            System.out.println("Današnji datum nije praznik.");
+            System.out.println("Ovaj datum nije praznik.");
             return false;
         }
         

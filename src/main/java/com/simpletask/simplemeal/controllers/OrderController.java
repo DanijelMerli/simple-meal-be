@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,7 @@ public class OrderController {
     private IOrderService orderService;
 
     @PostMapping()
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     public ResponseEntity<?> addOrder(Principal principal,@Valid @RequestBody OrderDTO dto, BindingResult bindingResult) throws NotFoundException {
         orderService.addOrder(dto, principal.getName());
         return new ResponseEntity<>(HttpStatus.OK);

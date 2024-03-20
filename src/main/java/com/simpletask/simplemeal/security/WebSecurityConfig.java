@@ -63,6 +63,9 @@ public class WebSecurityConfig {
 	    http.authorizeRequests()
 	        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 	        .requestMatchers("/api/auth/**").permitAll()
+	        		.requestMatchers("/api/meals/**").permitAll()
+	        		.requestMatchers("/api/meal/**").permitAll()
+	        		.requestMatchers("/api/order/**").permitAll()
 	        .anyRequest().authenticated()
 	        .and()
 	        .cors().and()
@@ -77,10 +80,10 @@ public class WebSecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-    	return (web) -> web.ignoring().requestMatchers(HttpMethod.POST, "/socket/**", "/api/auth/**", "api/meal/**")
+    	return (web) -> web.ignoring().requestMatchers(HttpMethod.POST, "/socket/**", "/api/auth/**")
     			.requestMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "favicon.ico",
-    			"/*/*.html", "/*/*.css", "/*/*.js", "/socket/**", "api/meals/**", "api/meal/**")
-				.requestMatchers(HttpMethod.PUT, "api/meal/**")
-				.requestMatchers(HttpMethod.DELETE, "api/meal/**");
+    			"/*/*.html", "/*/*.css", "/*/*.js", "/socket/**");
+//				.requestMatchers(HttpMethod.PUT, "api/meal/**")
+//				.requestMatchers(HttpMethod.DELETE, "api/meal/**");
 	}
 }

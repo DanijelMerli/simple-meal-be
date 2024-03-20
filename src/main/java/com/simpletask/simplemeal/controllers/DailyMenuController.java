@@ -3,6 +3,7 @@ package com.simpletask.simplemeal.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ public class DailyMenuController {
 	DailyMenuService dailyService;
 	
 	@GetMapping("daily-menu/today")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     public ResponseEntity<DailyMenuDTO> getDailyMenuForToday() throws Exception {
         DailyMenuDTO dailyMenuDTO = dailyService.getDailyMenuForToday();
         if (dailyMenuDTO != null) {
@@ -30,6 +32,7 @@ public class DailyMenuController {
     }
 	
 	@GetMapping("daily-menu/tomorrow")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     public ResponseEntity<DailyMenuDTO> getDailyMenuForTomorrow() throws Exception {
         DailyMenuDTO dailyMenuDTO = dailyService.getDailyMenuForTomorrow();
         if (dailyMenuDTO != null) {
