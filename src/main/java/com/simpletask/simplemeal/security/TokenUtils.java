@@ -51,6 +51,7 @@ public class TokenUtils {
 				.setExpiration(generateExpirationDate(EXPIRES_IN))
 				.claim("role", u.getRole().getName())
 				.claim("id", u.getId())
+				.claim("role", u.getRole().getName())
 				.signWith(getSignInKey(), SIGNATURE_ALGORITHM).compact();
 	}
 	
