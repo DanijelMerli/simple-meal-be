@@ -18,47 +18,40 @@ public class DailyMenuService {
 
 	@Autowired
 	DailyMenuRepository dailyRepo;
-
+	
 	public DailyMenuDTO getDailyMenuForToday() throws Exception {
 		Date today = getToday();
-		System.out.println(today);
-
 		if (isWeekend()) {
 			throw new Exception("Vikend je!");
-		} else if(isHoliday(today)) {
+		} else if (isHoliday(today)) {
 			throw new Exception("Praznik je!");
 		}
-
 		Optional<DailyMenu> optionalDailyMenu = dailyRepo.findByDateMenu(today);
 		return optionalDailyMenu.map(DailyMenuDTO::new).orElse(null);
 	}
 
-	public static boolean isWeekend() {
+	public boolean isWeekend() {
 		Calendar calendar = Calendar.getInstance();
 		int danUNedelji = calendar.get(Calendar.DAY_OF_WEEK);
 		if (danUNedelji == Calendar.SATURDAY || danUNedelji == Calendar.SUNDAY) {
-			System.out.println("Danas je vikend.");
 			return true;
 		} else {
-			System.out.println("Danas je radni dan.");
-			return false;
-		}
-	}
-	
-	public static boolean isWeekendTomorrow() {
-		Calendar calendar = Calendar.getInstance();
-		calendar.add(Calendar.DAY_OF_YEAR, 1);
-		int danUNedelji = calendar.get(Calendar.DAY_OF_WEEK);
-		if (danUNedelji == Calendar.SATURDAY || danUNedelji == Calendar.SUNDAY) {
-			System.out.println("Sutra je vikend.");
-			return true;
-		} else {
-			System.out.println("Sutra je radni dan.");
 			return false;
 		}
 	}
 
-	public static Date getToday() {
+	public boolean isWeekendTomorrow() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DAY_OF_YEAR, 1);
+		int danUNedelji = calendar.get(Calendar.DAY_OF_WEEK);
+		if (danUNedelji == Calendar.SATURDAY || danUNedelji == Calendar.SUNDAY) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public Date getToday() {
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
@@ -79,7 +72,7 @@ public class DailyMenuService {
 		return optionalDailyMenu.map(DailyMenuDTO::new).orElse(null);
 	}
 
-	public static Date getTomorrow() {
+	public Date getTomorrow() {
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.DAY_OF_YEAR, 1);
 		calendar.get(Calendar.DAY_OF_MONTH);
@@ -92,24 +85,19 @@ public class DailyMenuService {
 		return calendar.getTime();
 	}
 
-	public static boolean isHoliday(Date date) {
+	public boolean isHoliday(Date date) {
 		Set<Date> praznici = new HashSet<>();
-
-		praznici.add(new Date(124, 0, 1)); 
+		praznici.add(new Date(124, 0, 1));
 		praznici.add(new Date(124, 0, 2));
 		praznici.add(new Date(124, 0, 6));
-		praznici.add(new Date(124, 0, 7)); 
+		praznici.add(new Date(124, 0, 7));
 		praznici.add(new Date(124, 1, 15));
-        praznici.add(new Date(124, 4, 1)); 
-        praznici.add(new Date(124, 10, 11));
-        if (praznici.contains(date)) {
-            System.out.println("Ovaj datum je praznik.");
-            return true;
-        } else {
-            System.out.println("Ovaj datum nije praznik.");
-            return false;
-        }
-        
+		praznici.add(new Date(124, 4, 1));
+		praznici.add(new Date(124, 10, 11));
+		if (praznici.contains(date)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
-
 }
