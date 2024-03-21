@@ -24,100 +24,91 @@ import java.util.Optional;
 
 @Service
 public class UserService implements IUserService {
-    @Autowired
-    private UserRepository userRepo;
+	@Autowired
+	private UserRepository userRepo;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private TokenUtils jwtTokenUtils;
+	@Autowired
+	private TokenUtils jwtTokenUtils;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private RoleRepository roleRepository;
+	@Autowired
+	private RoleRepository roleRepository;
 
-    private ModelMapper modelMapper;
+	private ModelMapper modelMapper;
 
-    public User findUserByEmail(String email) {
-        return userRepo.findUserByEmail(email);
-    }
+	public User findUserByEmail(String email) {
+		return userRepo.findUserByEmail(email);
+	}
 
+	public LoginResponseDTO generateTokens(String email) {
+		User user = userRepo.findUserByEmail(email);
+		if (user != null) {
+			String token = jwtTokenUtils.generateToken(email);
+			return new LoginResponseDTO(token);
+		} else {
+			return null;
+		}
+	}
 
-    public LoginResponseDTO generateTokens(String email) {
-        User user =  userRepo.findUserByEmail(email);
-        if (user != null) {
-            String token = jwtTokenUtils.generateToken(email);
-//            String refreshToken = jwtTokenUtils.generateRefreshToken(email);
-            return new LoginResponseDTO(token);
-        } else {
-            return null;
-        }
-    }
+	public LoginResponseDTO login(LoginRequestDTO loginRequestDTO) throws AuthenticationException, NotFoundException {
+		UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(
+				loginRequestDTO.getEmail(), loginRequestDTO.getPassword());
+		Authentication auth = authenticationManager.authenticate(authReq);
+		SecurityContext sc = SecurityContextHolder.getContext();
+		sc.setAuthentication(auth);
+		String email = loginRequestDTO.getEmail();
+		Optional<User> userOptional = userRepo.findByEmail(email);
+		User user = userOptional.orElseThrow(() -> new NotFoundException("User with email " + email + " not found"));
+		return generateTokens(user.getEmail());
+	}
 
-    public LoginResponseDTO login(LoginRequestDTO loginRequestDTO) throws AuthenticationException, NotFoundException {
-        UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(loginRequestDTO.getEmail(),
-                loginRequestDTO.getPassword());
-        Authentication auth = authenticationManager.authenticate(authReq);
+	public void addDummy() {
+		String pass = passwordEncoder.encode("123");
+		System.out.println(pass);
+		Optional<Role> opt = roleRepository.findById(1);
+		if (opt.isPresent()) {
+			User user = new User("Kristina", "A", "andrijinkristina@gmail.com", pass, opt.get());
+			userRepo.saveAndFlush(user);
+		}
+	}
 
-        SecurityContext sc = SecurityContextHolder.getContext();
-        sc.setAuthentication(auth);
+	public User registerUser(UserDTO userDTO) throws Exception {
+		User user = getUserFromDTO(userDTO);
+		if (userRepo.existsByEmail(user.getEmail()))
+			return null;
+		String password = hashPassword(userDTO.getPassword());
+		user.setPassword(password);
+		return userRepo.save(user);
+	}
 
-        String email = loginRequestDTO.getEmail();
+	public String hashPassword(String password) {
+		return passwordEncoder.encode(password);
+	}
 
-        Optional<User> userOptional = userRepo.findByEmail(email);
-        User user = userOptional.orElseThrow(() -> new NotFoundException("User with email " + email + " not found"));
-        return generateTokens(user.getEmail());
-    }
+	public boolean verifyPassword(String password, String hashedPassword) {
+		return passwordEncoder.matches(password, hashedPassword);
+	}
 
-    public void addDummy() {
-        String pass = passwordEncoder.encode("123");
-        System.out.println(pass);
-        Optional<Role> opt = roleRepository.findById(1);
-        if (opt.isPresent()) {
-            User user = new User("Kristina", "A", "andrijinkristina@gmail.com", pass, opt.get());
-            userRepo.saveAndFlush(user);
-        }
-    }
+	private User getUserFromDTO(UserDTO userDTO) {
+		User user = new User();
+		user.setFirstName(userDTO.getFirstName());
+		user.setLastName(userDTO.getLastName());
+		user.setEmail(userDTO.getEmail());
+		user.setPassword(userDTO.getPassword());
+		user.setRole(roleRepository.findById(1).get());
+		return user;
+	}
 
-    public User registerUser(UserDTO userDTO) throws Exception  {
-
-        User user = getUserFromDTO(userDTO);
-        if (userRepo.existsByEmail(user.getEmail()))
-            return null;
-        String password =hashPassword(userDTO.getPassword());
-        user.setPassword(password);
-        return userRepo.save(user);
-    }
-
-    public String hashPassword(String password) {
-        return passwordEncoder.encode(password);
-    }
-
-    public boolean verifyPassword(String password, String hashedPassword) {
-        return passwordEncoder.matches(password, hashedPassword);
-    }
-
-    
-    private User getUserFromDTO(UserDTO userDTO) {
-    	User user = new User();
-    	user.setFirstName(userDTO.getFirstName());
-    	user.setLastName(userDTO.getLastName());
-    	user.setEmail(userDTO.getEmail());
-    	user.setPassword(userDTO.getPassword());
-    	user.setRole(roleRepository.findById(1).get());
-    	return user;
-    	
-    }
-    private UserDTO convertUserToDTO(User user) {
-    	 UserDTO userDTO = new UserDTO();
-         userDTO.setFirstName(user.getFirstName());
-         userDTO.setLastName(user.getLastName());
-         userDTO.setEmail(user.getEmail());
-         return userDTO;
-    }
-
-
+	private UserDTO convertUserToDTO(User user) {
+		UserDTO userDTO = new UserDTO();
+		userDTO.setFirstName(user.getFirstName());
+		userDTO.setLastName(user.getLastName());
+		userDTO.setEmail(user.getEmail());
+		return userDTO;
+	}
 }
