@@ -11,7 +11,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
 
 @Service
@@ -58,38 +57,34 @@ public class EmailService implements IEmailService {
 
     public void sendChosenOneEmail(User chosenOne, Date today) {
         Optional<Order> orderForTodayOpt = orderService.findByDate(today);
+        if (orderForTodayOpt.isEmpty()) return;
+        Order orderForToday = orderForTodayOpt.get();
 
-        if (orderForTodayOpt.isPresent()) {
-            Order orderForToday = orderForTodayOpt.get();
+        StringBuilder emailBody = new StringBuilder();
+        emailBody.append("<html><body>");
+        emailBody.append("Dear ").append(chosenOne.getFirstName()).append(",<br/><br/>");
+        emailBody.append("You have been chosen as the one for today.<br/><br/>");
+        emailBody.append("Order details for today:<br/>");
+        emailBody.append("Order number: ").append(orderForToday.getId()).append("<br/>");
+        emailBody.append("Items:<br/>");
+        for (OrderItem item : orderForToday.getOrderItems()) {
+            emailBody.append("- ").append(item.getMeal().getName()).append(": ").append(item.getMealCount()).append(" (").append(item.getRegularMealSize()).append(")<br/>");
+        }
+        emailBody.append("<br/>");
+        emailBody.append("Total Price: $").append(orderForToday.getTotalPrice()).append("<br/><br/>");
+        emailBody.append("This is the link for the checklist: <a href='http://localhost:4200/checklist'>Click here to view the checklist</a><br/><br/>");
+        emailBody.append("Best regards,<br/>Your Topli obrok");
+        emailBody.append("</body></html>");
 
-            StringBuilder emailBody = new StringBuilder();
-            emailBody.append("<html><body>");
-            emailBody.append("Dear ").append(chosenOne.getFirstName()).append(",<br/><br/>");
-            emailBody.append("You have been chosen as the one for today.<br/><br/>");
-            emailBody.append("Order details for today:<br/>");
-            emailBody.append("Order number: ").append(orderForToday.getId()).append("<br/>");
-            emailBody.append("Items:<br/>");
-            for (OrderItem item : orderForToday.getOrderItems()) {
-                emailBody.append("- ").append(item.getMeal().getName()).append(": ").append(item.getMealCount()).append(" (").append(item.getRegularMealSize()).append(")<br/>");
-            }
-            emailBody.append("<br/>");
-            emailBody.append("Total Price: $").append(orderForToday.getTotalPrice()).append("<br/><br/>");
-            emailBody.append("This is the link for the checklist: <a href='http://localhost:4200/checklist'>Click here to view the checklist</a><br/><br/>");
-            emailBody.append("Best regards,<br/>Your Topli obrok");
-            emailBody.append("</body></html>");
-
-            MimeMessage message = javaMailSender.createMimeMessage();
-            try {
-                MimeMessageHelper helper = new MimeMessageHelper(message, true);
-                helper.setTo(chosenOne.getEmail());
-                helper.setSubject("You are chosen one for today");
-                helper.setText(emailBody.toString(), true);
-                javaMailSender.send(message);
-            } catch (MessagingException e) {
-                e.printStackTrace();
-            }
-        } else {
-            System.out.println("No orders for today.");
+        MimeMessage message = javaMailSender.createMimeMessage();
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(chosenOne.getEmail());
+            helper.setSubject("You are chosen one for today");
+            helper.setText(emailBody.toString(), true);
+            javaMailSender.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
         }
     }
 
