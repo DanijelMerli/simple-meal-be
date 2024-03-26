@@ -55,6 +55,7 @@ public class ChosenOneService {
 					dto.setLastName(entry.getKey().getLastName());
 					dto.setEmail(entry.getKey().getEmail());
 					dto.setPriceForOrder(entry.getValue());
+					dto.setPaid(getIsPaid(entry.getKey().getId()));
 					return dto;
 				}).collect(Collectors.toList());
 		chosenOneDTO = new ChosenOneDTO(checksList, orderForToday.get().getTotalPrice());
@@ -82,6 +83,16 @@ public class ChosenOneService {
 			}
 		}
 		orderItemRepository.saveAll(listOfOrderItems);
+		return true;
+	}
+	
+	private boolean getIsPaid(Integer userId) {
+		List<OrderItem> orderItems = orderItemRepository.findByOrderer(userRepo.findById(userId).orElse(null));
+		for (OrderItem orderItem : orderItems) {
+			if (orderItem.isPaid() == false) {
+				return false;
+			}
+		}
 		return true;
 	}
 }
