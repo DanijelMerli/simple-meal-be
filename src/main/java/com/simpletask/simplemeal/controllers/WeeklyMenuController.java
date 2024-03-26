@@ -71,7 +71,6 @@ public class WeeklyMenuController {
 			WeeklyMenuResponseDTO weekMenuResponse = new WeeklyMenuResponseDTO(weekMenu.getId());
             return ResponseEntity.ok(weekMenuResponse);
         } else {
-        	System.out.println( "nema  ");
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
 	}
 	}

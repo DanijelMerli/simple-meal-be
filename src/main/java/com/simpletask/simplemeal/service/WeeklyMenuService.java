@@ -126,14 +126,10 @@ public class WeeklyMenuService {
 		
 		Optional<WeeklyMenu> weeklyMenuOptional = weekRepo.findByStartDate(date);
 		WeeklyMenu weeklyMenu = null;
-		if (weeklyMenuOptional.isEmpty()) {
-		 weeklyMenu = weeklyMenuOptional.get();
-		} else {
-			weeklyMenu = new WeeklyMenu();
-			weeklyMenu.setStartDate(date);
-		}
-		
-			return weeklyMenu;
+		if (!weeklyMenuOptional.isEmpty()) 
+			weeklyMenu = weeklyMenuOptional.get();
+		  
+		return weeklyMenu;
 		
 	}
 		 
@@ -143,8 +139,19 @@ public class WeeklyMenuService {
 	
 	public WeeklyMenu saveWeeklyMenuAuxiliary(SimpleDateFormat dateParse, WeeklyMenuAdminDTO weeklyMenuDTO) throws ParseException, IOException {
 		WeeklyMenu weeklyMenu = getWeeklyMenu(dateParse,weeklyMenuDTO);
-		if (weeklyMenu==null) 
+		
+		if (weeklyMenu!=null) 
 			return null;
+		
+		
+		weeklyMenu = new WeeklyMenu();
+		
+		Date date =null;
+		if (weeklyMenuDTO!=null && weeklyMenuDTO.getStartDate()!=null)
+			 date = dateParse.parse(weeklyMenuDTO.getStartDate());
+		
+		weeklyMenu.setStartDate(date);
+		
 		weekMenuRepo.save(weeklyMenu);
 		List<DailyMenu> dm = new ArrayList<>();
 		for (DailyMenuAdminDTO dailyMenuDTO: weeklyMenuDTO.getDailyMenus() ) {
@@ -167,7 +174,7 @@ public class WeeklyMenuService {
 				fitMealOptional.ifPresent(fit -> dailyMenu.setFit(fit));
 				}
 			
-			if (dailyMenu.getSoup()!=null) {
+			if (dailyMenuDTO.getSoupId()!=null) {
 				if ((dailyMenuDTO.getFitMealId()==null ||  dailyMenuDTO.getRegularMealId()==null))
 					throw new IllegalArgumentException("Extra meal cannot be added without a regular or a fit  meal.");
 					
@@ -176,7 +183,7 @@ public class WeeklyMenuService {
 				
 				}
 			
-			if (dailyMenu.getDessert()!=null) {
+			if (dailyMenuDTO.getDessertId()!=null) {
 				if ((dailyMenuDTO.getFitMealId()==null || dailyMenuDTO.getRegularMealId()==null))
 					throw new IllegalArgumentException("Extra meal cannot be added without a regular or a fit  meal.");
 				Optional<Extra> dessertOptional = extraMealRepo.findById(dailyMenuDTO.getDessertId());
@@ -199,7 +206,7 @@ public class WeeklyMenuService {
 	
 
 	public WeeklyMenu updateWeeklyMenu(@Valid WeeklyMenuAdminDTO weeklyMenuDTO) throws Exception{
-		SimpleDateFormat dateParse = new SimpleDateFormat("dd-MM-yyyy.");
+		SimpleDateFormat dateParse = new SimpleDateFormat("dd-MM-yyyy");
 		Date date = dateParse.parse(weeklyMenuDTO.getStartDate());	
 		
 		Optional<WeeklyMenu> weekMenuOptional = weekRepo.findByStartDate(date);
