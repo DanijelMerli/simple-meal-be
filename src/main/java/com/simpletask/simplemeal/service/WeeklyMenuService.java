@@ -79,6 +79,22 @@ public class WeeklyMenuService {
 		calendar.set(Calendar.MILLISECOND, 0);
 		return calendar.getTime();
 	}
+	
+	public  boolean isMondayOrNextMonday(String dateString) throws ParseException {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+	    Date providedDate;
+	        
+	    providedDate = dateFormat.parse(dateString);		
+        Date currentMonday = getStartOfWeek();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(currentMonday);
+        calendar.add(Calendar.DAY_OF_WEEK, 7);
+        Date nextMonday = calendar.getTime();
+
+        return providedDate.equals(currentMonday) || providedDate.equals(nextMonday);
+    }
+
 
 	public static Date getEndOfWeek(Date start) {
 		Calendar calendar = Calendar.getInstance();
@@ -86,7 +102,7 @@ public class WeeklyMenuService {
 		calendar.add(Calendar.DAY_OF_WEEK, 6);
 		return calendar.getTime();
 	}
-	
+	/*
 	  public  boolean fromTheFuture(String dateString)  throws ParseException{
 		  SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 	        Date providedDate;
@@ -95,14 +111,14 @@ public class WeeklyMenuService {
 	        Date currentDate = new Date();
 	        return providedDate.after(currentDate);
 
-	    }
+	    }*/
 	
 	public  WeeklyMenu saveWeeklyMenu(WeeklyMenuAdminDTO weeklyMenuDTO) throws ParseException {
 		SimpleDateFormat dateParse = new SimpleDateFormat("dd-MM-yyyy.");
 		String dateString = weeklyMenuDTO.getStartDate();
 		if (dateString==null) 
 			throw new IllegalArgumentException("Date must be provided");
-		if (!fromTheFuture(dateString)) 
+		if (!isMondayOrNextMonday(dateString)) 
 			throw new IllegalArgumentException("Date must be after today");
 		
 		return saveWeeklyMenuAuxiliary(dateParse, weeklyMenuDTO);

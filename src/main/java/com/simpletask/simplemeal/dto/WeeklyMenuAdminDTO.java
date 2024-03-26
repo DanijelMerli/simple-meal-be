@@ -6,7 +6,6 @@ import com.simpletask.simplemeal.model.WeeklyMenu;
 
 public class WeeklyMenuAdminDTO {
 
-	private int idWeeklyMenu;
 	
 	private List<DailyMenuAdminDTO> dailyMenus;
 	
@@ -16,9 +15,8 @@ public class WeeklyMenuAdminDTO {
 	
 	
 
-	public WeeklyMenuAdminDTO(int idWeeklyMenu, List<DailyMenuAdminDTO> dailyMenus, String startDate, byte[] imageData) {
+	public WeeklyMenuAdminDTO(List<DailyMenuAdminDTO> dailyMenus, String startDate, byte[] imageData) {
 		super();
-		this.idWeeklyMenu = idWeeklyMenu;
 		this.dailyMenus = dailyMenus;
 		this.startDate = startDate;
 	}
@@ -27,13 +25,6 @@ public class WeeklyMenuAdminDTO {
 	
 	public WeeklyMenuAdminDTO() {}
 
-	public int getIdWeeklyMenu() {
-		return idWeeklyMenu;
-	}
-
-	public void setIdWeeklyMenu(int idWeeklyMenu) {
-		this.idWeeklyMenu = idWeeklyMenu;
-	}
 
 	public List<DailyMenuAdminDTO> getDailyMenus() {
 		return dailyMenus;
