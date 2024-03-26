@@ -21,7 +21,7 @@ public class ChosenOneController {
 	ChosenOneService chosenOneService;
 	
 	@GetMapping()
-	@PreAuthorize("hasAnyRole('THE_CHOSEN_ONE')")
+	@PreAuthorize("hasAnyRole('ROLE_THE_CHOSEN_ONE')")
 	  public ResponseEntity<ChosenOneDTO> getDetailsChosenOne() throws Exception {
         ChosenOneDTO chosenOneDTO = chosenOneService.getAllUsers();
         if (chosenOneDTO != null) {
@@ -31,6 +31,7 @@ public class ChosenOneController {
         }
     }
 	@PutMapping("/pay/{userId}")
+	@PreAuthorize("hasAnyRole('ROLE_THE_CHOSEN_ONE')")
     public ResponseEntity<String> markOrderAsPaid(@PathVariable Integer userId) {
         boolean success = chosenOneService.markOrderAsPaid(userId);
         if (success) {
