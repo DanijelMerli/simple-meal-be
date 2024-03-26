@@ -1,7 +1,6 @@
 package com.simpletask.simplemeal.dto;
 
 import com.simpletask.simplemeal.annotations.UniqueEmail;
-import com.simpletask.simplemeal.model.User;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

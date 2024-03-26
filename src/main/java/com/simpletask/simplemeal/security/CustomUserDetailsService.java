@@ -25,6 +25,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 //		else if(!user.isActivated()) {
 //			throw new UserNotActivatedException("User with email " + email+ " is not activated");
 //		}
-		else return null /*user*/;
+		else return user;
 	}
 }

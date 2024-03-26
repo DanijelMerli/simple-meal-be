@@ -1,8 +1,9 @@
 package com.simpletask.simplemeal.model;
 
 import java.io.Serializable;
-
-import com.simpletask.simplemeal.dto.UserDTO;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -36,15 +37,15 @@ public class User implements Serializable, UserDetails{
 	@Column(name="password")
 	private String password;
 
+	@Transient
+	private String token;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonManagedReference
+	private Role role;
+
 	public User() {
 	}
-	
-	 public User(UserDTO userDTO) {
-	    	this.firstName=userDTO.getFirstName();
-	    	this.lastName = userDTO.getLastName();
-	    	this.email=userDTO.getEmail();
-	    	this.password=userDTO.getPassword();
-	    }
 
 	public User(String firstName, String lastName, String email, String password, Role role) {
 		this.firstName = firstName;
