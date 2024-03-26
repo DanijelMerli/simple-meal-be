@@ -32,12 +32,12 @@ public class ChosenOneController {
     }
 	@PutMapping("/pay/{userId}")
 	@PreAuthorize("hasAnyRole('ROLE_THE_CHOSEN_ONE')")
-    public ResponseEntity<String> markOrderAsPaid(@PathVariable Integer userId) {
+    public boolean markOrderAsPaid(@PathVariable Integer userId) {
         boolean success = chosenOneService.markOrderAsPaid(userId);
         if (success) {
-            return ResponseEntity.ok("Porudzbina oznacena kao placena.");
+            return true;
         } else {
-            return ResponseEntity.badRequest().body("Greska prilikom oznacavanja porudzbine kao placene.");
+            return false;
         }
     }
 }
