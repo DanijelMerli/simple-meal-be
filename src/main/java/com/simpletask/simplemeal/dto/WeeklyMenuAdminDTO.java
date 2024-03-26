@@ -11,11 +11,11 @@ public class WeeklyMenuAdminDTO {
 	
 	private String startDate;
 	
-	private byte[] imageData;	
+	//private byte[] imageData;	
 	
 	
 
-	public WeeklyMenuAdminDTO(List<DailyMenuAdminDTO> dailyMenus, String startDate, byte[] imageData) {
+	public WeeklyMenuAdminDTO(List<DailyMenuAdminDTO> dailyMenus, String startDate/*, byte[] imageData*/) {
 		super();
 		this.dailyMenus = dailyMenus;
 		this.startDate = startDate;
@@ -41,7 +41,7 @@ public class WeeklyMenuAdminDTO {
 	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
-
+/*
 	public byte[] getImageData() {
 		return imageData;
 	}
@@ -51,6 +51,6 @@ public class WeeklyMenuAdminDTO {
 	}
 	
 	
-	
+	*/
 	
 }

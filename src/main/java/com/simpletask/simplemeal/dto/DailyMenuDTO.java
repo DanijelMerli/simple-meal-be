@@ -6,6 +6,7 @@ import com.simpletask.simplemeal.model.DailyMenu;
 
 
 public class DailyMenuDTO {
+	
 	private int idDailyMenu;
 	
 	private String dateMenu;
@@ -18,12 +19,11 @@ public class DailyMenuDTO {
 	
 	private ExtraDTO dessert;
 
-	
 
-	public DailyMenuDTO(int idDailyMenu, String dateMenu, RegularMealDTO regular, FitMealDTO fit, ExtraDTO soup,
+	
+	public DailyMenuDTO(String dateMenu, RegularMealDTO regular, FitMealDTO fit, ExtraDTO soup,
 						ExtraDTO dessert) {
 		super();
-		this.idDailyMenu = idDailyMenu;
 		this.dateMenu = dateMenu;
 		this.regular = regular;
 		this.fit = fit;
@@ -35,13 +35,6 @@ public class DailyMenuDTO {
 		
 	}
 
-	public int getIdDailyMenu() {
-		return idDailyMenu;
-	}
-
-	public void setIdDailyMenu(int idDailyMenu) {
-		this.idDailyMenu = idDailyMenu;
-	}
 
 	public String getDateMenu() {
 		return dateMenu;

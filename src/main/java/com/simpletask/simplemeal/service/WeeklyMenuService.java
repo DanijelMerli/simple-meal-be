@@ -2,6 +2,7 @@ package com.simpletask.simplemeal.service;
 
 
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.simpletask.simplemeal.dto.DailyMenuAdminDTO;
 import com.simpletask.simplemeal.dto.DailyMenuDTO;
@@ -57,7 +59,7 @@ public class WeeklyMenuService {
 	@Autowired
 	ImageService imageService;
 	
-	@Autowired
+	
 	
 	
 	
@@ -102,20 +104,13 @@ public class WeeklyMenuService {
 		calendar.add(Calendar.DAY_OF_WEEK, 6);
 		return calendar.getTime();
 	}
-	/*
-	  public  boolean fromTheFuture(String dateString)  throws ParseException{
-		  SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-	        Date providedDate;
-	        
-	        providedDate = dateFormat.parse(dateString);
-	        Date currentDate = new Date();
-	        return providedDate.after(currentDate);
-
-	    }*/
 	
-	public  WeeklyMenu saveWeeklyMenu(WeeklyMenuAdminDTO weeklyMenuDTO) throws ParseException {
-		SimpleDateFormat dateParse = new SimpleDateFormat("dd-MM-yyyy.");
-		String dateString = weeklyMenuDTO.getStartDate();
+	
+	public  WeeklyMenu saveWeeklyMenu(WeeklyMenuAdminDTO weeklyMenuDTO) throws ParseException, IOException {
+		SimpleDateFormat dateParse = new SimpleDateFormat("dd-MM-yyyy");
+		String dateString = weeklyMenuDTO.getStartDate(); 
+		
+		
 		if (dateString==null) 
 			throw new IllegalArgumentException("Date must be provided");
 		if (!isMondayOrNextMonday(dateString)) 
@@ -128,25 +123,29 @@ public class WeeklyMenuService {
 	
 	public WeeklyMenu getWeeklyMenu(SimpleDateFormat dateParse, WeeklyMenuAdminDTO weeklyMenuDTO) throws ParseException {
 		Date date = dateParse.parse(weeklyMenuDTO.getStartDate());
-		Date endDate = getEndOfWeek(date);
+		
 		Optional<WeeklyMenu> weeklyMenuOptional = weekRepo.findByStartDate(date);
-		if (weeklyMenuOptional.isPresent()) {
-		WeeklyMenu weeklyMenu = weeklyMenuOptional.get();
-		if (weeklyMenu==null) {
+		WeeklyMenu weeklyMenu = null;
+		if (weeklyMenuOptional.isEmpty()) {
+		 weeklyMenu = weeklyMenuOptional.get();
+		} else {
 			weeklyMenu = new WeeklyMenu();
 			weeklyMenu.setStartDate(date);
 		}
-			return weeklyMenu;}
-		else {
-			return null;
-		}
-	}
-	
-	public WeeklyMenu saveWeeklyMenuAuxiliary(SimpleDateFormat dateParse, WeeklyMenuAdminDTO weeklyMenuDTO) throws ParseException {
-		WeeklyMenu weeklyMenu = getWeeklyMenu(dateParse,weeklyMenuDTO);
-		if (weeklyMenu==null)
-			return null;
 		
+			return weeklyMenu;
+		
+	}
+		 
+			
+		
+	
+	
+	public WeeklyMenu saveWeeklyMenuAuxiliary(SimpleDateFormat dateParse, WeeklyMenuAdminDTO weeklyMenuDTO) throws ParseException, IOException {
+		WeeklyMenu weeklyMenu = getWeeklyMenu(dateParse,weeklyMenuDTO);
+		if (weeklyMenu==null) 
+			return null;
+		weekMenuRepo.save(weeklyMenu);
 		List<DailyMenu> dm = new ArrayList<>();
 		for (DailyMenuAdminDTO dailyMenuDTO: weeklyMenuDTO.getDailyMenus() ) {
 			Date dailyMenuDate = dateParse.parse(dailyMenuDTO.getDateMenu());
@@ -185,6 +184,7 @@ public class WeeklyMenuService {
 				
 				
 			}
+			dailyMenu.setWeeklyMenu(weeklyMenu);
 			dailyMenuRepo.save(dailyMenu);
 			
 			dm.add(dailyMenu);
@@ -192,17 +192,11 @@ public class WeeklyMenuService {
 		
 			weeklyMenu.setDailyMenu(dm);
 			weekMenuRepo.save(weeklyMenu);
-			Image image = new Image();
-			image.setWeeklyMenu(weeklyMenu);
 			
-			if (weeklyMenuDTO.getImageData()==null)
-				throw new IllegalArgumentException("Image must be provided");
-			
-			image.setData(weeklyMenuDTO.getImageData());
-			imageService.createOrUpdateImage(image,false);
-			weeklyMenu.setImage(image);
 			return weeklyMenu;
 	}
+	
+	
 
 	public WeeklyMenu updateWeeklyMenu(@Valid WeeklyMenuAdminDTO weeklyMenuDTO) throws Exception{
 		SimpleDateFormat dateParse = new SimpleDateFormat("dd-MM-yyyy.");
@@ -251,18 +245,13 @@ public class WeeklyMenuService {
 				Optional<Extra> extraMealOptional = extraMealRepo.findById(dailyMenuDTO.getDessertId());
 				extraMealOptional.ifPresent(dessert -> dailyMenu.setDessert(dessert));
 			}
-				if (weeklyMenuDTO.getImageData()!=null) {
-				Image image = new Image();
-				image.setWeeklyMenu(weekMenu);
-			
-				image.setData(weeklyMenuDTO.getImageData());
-				imageService.createOrUpdateImage(image,true);
-				weekMenu.setImage(image);
-				}
+				
+				
 		}		
 	}
 
 		return weekMenu;
+		
 }
 }
 	
