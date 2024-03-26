@@ -26,6 +26,9 @@ public class OrderItem implements Serializable  {
 
     @Column(name = "meal_count")
     private int mealCount;
+    
+    @Column(name = "paid")
+    private boolean paid;
 
     @JsonIgnore
     @ManyToOne(cascade = {CascadeType.ALL})
@@ -51,8 +54,21 @@ public class OrderItem implements Serializable  {
         this.order = order;
         this.mealCount = mealCount;
     }
+    
+    
+    public OrderItem(int id, User orderer, Meal meal, MealSize regularMealSize, int mealCount, boolean paid,
+			Order order) {
+		super();
+		this.id = id;
+		this.orderer = orderer;
+		this.meal = meal;
+		this.regularMealSize = regularMealSize;
+		this.mealCount = mealCount;
+		this.paid = paid;
+		this.order = order;
+	}
 
-    public int getId() {
+	public int getId() {
         return id;
     }
 
@@ -99,4 +115,13 @@ public class OrderItem implements Serializable  {
     public void setMealCount(int mealCount) {
         this.mealCount = mealCount;
     }
+
+	public boolean isPaid() {
+		return paid;
+	}
+
+	public void setPaid(boolean paid) {
+		this.paid = paid;
+	}
+    
 }
