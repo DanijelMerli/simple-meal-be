@@ -48,7 +48,7 @@ public class OrderService implements IOrderService {
 		return order;
 	}
 
-	private double calculateTotalPrice(List<OrderItem> items) {
+	public double calculateTotalPrice(List<OrderItem> items) {
 		return items.stream().mapToDouble(item -> item.getMealCount()
 				* mealService.calculatePriceByMeal(item.getMeal().getId(), item.getRegularMealSize())).sum();
 	}

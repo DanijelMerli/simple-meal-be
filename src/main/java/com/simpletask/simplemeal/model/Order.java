@@ -10,66 +10,66 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 public class Order implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 
-    @Column(name = "order_item")
-    @JsonIgnore
-    @OneToMany(targetEntity = OrderItem.class, mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<OrderItem> orderItems;
+	@Column(name = "order_item")
+	@JsonIgnore
+	@OneToMany(targetEntity = OrderItem.class, mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<OrderItem> orderItems;
 
-    @Column(name = "date")
-    private Date date;
+	@Column(name = "date")
+	private Date date;
 
-    @Column(name = "total_price")
-    private double totalPrice;
+	@Column(name = "total_price")
+	private double totalPrice;
 
-    public Order() {
-    }
+	public Order() {
+	}
 
-    public Order(int id, List<OrderItem> orderItems, Date date, double totalPrice) {
-        this.id = id;
-        this.orderItems = orderItems;
-        this.date = date;
-        this.totalPrice = totalPrice;
-    }
+	public Order(int id, List<OrderItem> orderItems, Date date, double totalPrice) {
+		this.id = id;
+		this.orderItems = orderItems;
+		this.date = date;
+		this.totalPrice = totalPrice;
+	}
 
-    public Order(List<OrderItem> orderItems, Date date, double totalPrice) {
-        this.orderItems = orderItems;
-        this.date = date;
-        this.totalPrice = totalPrice;
-    }
+	public Order(List<OrderItem> orderItems, Date date, double totalPrice) {
+		this.orderItems = orderItems;
+		this.date = date;
+		this.totalPrice = totalPrice;
+	}
 
-    public int getId() {
-        return id;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public List<OrderItem> getOrderItems() {
-        return orderItems;
-    }
+	public List<OrderItem> getOrderItems() {
+		return orderItems;
+	}
 
-    public void setOrderItems(List<OrderItem> orderItems) {
-        this.orderItems = orderItems;
-    }
+	public void setOrderItems(List<OrderItem> orderItems) {
+		this.orderItems = orderItems;
+	}
 
-    public Date getDate() {
-        return date;
-    }
+	public Date getDate() {
+		return date;
+	}
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
-    public double getTotalPrice() {
-        return totalPrice;
-    }
+	public double getTotalPrice() {
+		return totalPrice;
+	}
 
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
+	public void setTotalPrice(double totalPrice) {
+		this.totalPrice = totalPrice;
+	}
 }

@@ -1,5 +1,6 @@
 package com.simpletask.simplemeal.service;
 
+import com.simpletask.simplemeal.dto.OrderItemCheckListDTO;
 import com.simpletask.simplemeal.dto.OrderItemDTO;
 import com.simpletask.simplemeal.enums.MealSize;
 import com.simpletask.simplemeal.exception.NotFoundException;
@@ -51,5 +52,5 @@ public class OrderItemService implements IOrderItemService {
     @Override
     public void addOrderItem(OrderItem item) {
         item = orderItemRepository.saveAndFlush(item);
-    }
+    }	
 }
