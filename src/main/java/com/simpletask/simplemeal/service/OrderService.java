@@ -24,17 +24,21 @@ public class OrderService implements IOrderService {
 	@Override
 	public void addOrder(OrderDTO dto, String userEmail) {
 		List<OrderItem> orderItemList = orderItemService.convertDTOListToModelList(dto.getOrderItems(), userEmail);
+		double orderTotalPrice = calculateTotalPrice(orderItemList);
 		Optional<Order> orderOpt = findByDate(dto.isForToday() ? getDate(new Date()) : getDate(getTomorrow()));
 		Order order = orderOpt.orElseGet(() -> {
 			Order newOrder = convertDTOtoModel(dto, userEmail);
-			newOrder.setTotalPrice(calculateTotalPrice(orderItemList));
+			newOrder.setTotalPrice(0.0);
 			newOrder.setOrderItems(new ArrayList<>());
 			return addOrder(newOrder);
 		});
+		double newTotalPrice = 0.0;
 		for (OrderItem item : orderItemList) {
 			item.setOrder(order);
 			this.orderItemService.addOrderItem(item);
 		}
+		order.setTotalPrice(order.getTotalPrice() + orderTotalPrice);
+		orderRepository.saveAndFlush(order);
 	}
 
 	@Override
