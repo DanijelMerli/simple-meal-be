@@ -12,6 +12,7 @@ import com.simpletask.simplemeal.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,5 +52,15 @@ public class OrderItemService implements IOrderItemService {
     @Override
     public void addOrderItem(OrderItem item) {
         item = orderItemRepository.saveAndFlush(item);
-    }	
+    }
+
+    public List<User> getUsersWhoOrderedToday(Date currentDate) {
+        List<OrderItem> orderItemsForToday = orderItemRepository.findByOrderDate(currentDate);
+
+        List<User> users = orderItemsForToday.stream()
+                .map(OrderItem::getOrderer)
+                .distinct()
+                .collect(Collectors.toList());
+        return users;
+    }
 }
