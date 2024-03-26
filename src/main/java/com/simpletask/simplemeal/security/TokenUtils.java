@@ -49,6 +49,7 @@ public class TokenUtils {
 				.setAudience(generateAudience())
 				.setIssuedAt(new Date())
 				.setExpiration(generateExpirationDate(EXPIRES_IN))
+				.claim("role", u.getRole().getName())
 				.claim("id", u.getId())
 				.signWith(getSignInKey(), SIGNATURE_ALGORITHM).compact();
 	}

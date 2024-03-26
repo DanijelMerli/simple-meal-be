@@ -1,11 +1,8 @@
 package com.simpletask.simplemeal.service;
 
-
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,18 +13,16 @@ import com.simpletask.simplemeal.repository.WeeklyMenuRepository;
 
 @Service
 public class WeeklyMenuService {
-	
+
 	@Autowired
 	WeeklyMenuRepository weekRepo;
-	
-	 public WeeklyMenuDTO getWeeklyMenuByStartDate() {
-		 Date startOfWeek = getStartOfWeek();
-		 Date endOfWeek = getEndOfWeek(startOfWeek);
-//		 System.out.println(startOfWeek);
-//		 System.out.println(endOfWeek);
-	     Optional<WeeklyMenu> optionalWeeklyMenu = weekRepo.findByStartDateBetween(startOfWeek, endOfWeek);
-		 return optionalWeeklyMenu.map(WeeklyMenuDTO::new).orElse(null);
-	 }
+
+	public WeeklyMenuDTO getWeeklyMenuByStartDate() {
+		Date startOfWeek = getStartOfWeek();
+		Date endOfWeek = getEndOfWeek(startOfWeek);
+		Optional<WeeklyMenu> optionalWeeklyMenu = weekRepo.findByStartDateBetween(startOfWeek, endOfWeek);
+		return optionalWeeklyMenu.map(WeeklyMenuDTO::new).orElse(null);
+	}
 
 	public static Date getStartOfWeek() {
 		Calendar calendar = Calendar.getInstance();
