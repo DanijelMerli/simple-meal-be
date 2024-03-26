@@ -1,6 +1,5 @@
 package com.simpletask.simplemeal.service;
 
-import com.simpletask.simplemeal.dto.OrderItemCheckListDTO;
 import com.simpletask.simplemeal.dto.OrderItemDTO;
 import com.simpletask.simplemeal.enums.MealSize;
 import com.simpletask.simplemeal.exception.NotFoundException;

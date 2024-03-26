@@ -47,7 +47,6 @@ public class ChosenOneService {
 			return null;
 		}
 		List<OrderItem> orderItemsForToday = orderItemRepository.findByOrderDate(today);
-		double fullPrice = orderService.calculateTotalPrice(orderItemsForToday);
 		List<ChecksListUserDTO> checksList = orderItemsForToday.stream().collect(
 				Collectors.groupingBy(OrderItem::getOrderer, Collectors.summingDouble(this::calculateItemPrice)))
 				.entrySet().stream().map(entry -> {
@@ -58,7 +57,7 @@ public class ChosenOneService {
 					dto.setPriceForOrder(entry.getValue());
 					return dto;
 				}).collect(Collectors.toList());
-		chosenOneDTO = new ChosenOneDTO(checksList, fullPrice);
+		chosenOneDTO = new ChosenOneDTO(checksList, orderForToday.get().getTotalPrice());
 		return chosenOneDTO;
 	}
 	
