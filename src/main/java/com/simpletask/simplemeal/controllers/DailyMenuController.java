@@ -21,7 +21,7 @@ public class DailyMenuController {
 	DailyMenuService dailyService;
 	
 	@GetMapping("daily-menu/today")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_THE_CHOSEN_ONE')")
     public ResponseEntity<DailyMenuDTO> getDailyMenuForToday() throws Exception {
         DailyMenuDTO dailyMenuDTO = dailyService.getDailyMenuForToday();
         if (dailyMenuDTO != null) {
@@ -32,7 +32,7 @@ public class DailyMenuController {
     }
 	
 	@GetMapping("daily-menu/tomorrow")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_THE_CHOSEN_ONE')")
     public ResponseEntity<DailyMenuDTO> getDailyMenuForTomorrow() throws Exception {
         DailyMenuDTO dailyMenuDTO = dailyService.getDailyMenuForTomorrow();
         if (dailyMenuDTO != null) {
