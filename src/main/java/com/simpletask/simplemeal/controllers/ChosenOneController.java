@@ -18,28 +18,29 @@ import com.simpletask.simplemeal.service.ChosenOneService;
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/chosen-one")
 public class ChosenOneController {
-	
+
 	@Autowired
 	ChosenOneService chosenOneService;
-	
+
 	@GetMapping()
 	@PreAuthorize("hasRole('ROLE_THE_CHOSEN_ONE')")
-	  public ResponseEntity<ChosenOneDTO> getDetailsChosenOne() throws Exception {
-        ChosenOneDTO chosenOneDTO = chosenOneService.getAllUsers();
-        if (chosenOneDTO != null) {
-            return new ResponseEntity<>(chosenOneDTO, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+	public ResponseEntity<ChosenOneDTO> getDetailsChosenOne() throws Exception {
+		ChosenOneDTO chosenOneDTO = chosenOneService.getAllUsers();
+		if (chosenOneDTO != null) {
+			return new ResponseEntity<>(chosenOneDTO, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+
 	@PutMapping("/pay/{userId}")
 	@PreAuthorize("hasRole('ROLE_THE_CHOSEN_ONE')")
-    public boolean markOrderAsPaid(@PathVariable Integer userId) {
-        boolean success = chosenOneService.markOrderAsPaid(userId);
-        if (success) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+	public boolean markOrderAsPaid(@PathVariable Integer userId) {
+		boolean success = chosenOneService.markOrderAsPaid(userId);
+		if (success) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

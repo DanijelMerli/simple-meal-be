@@ -10,11 +10,11 @@ public class ChecksListUserDTO {
 	private String email;
 
 	private double priceForOrder;
-	
+
 	private boolean isPaid;
 
-
-	public ChecksListUserDTO(int id, String firstName, String lastName, String email, double priceForOrder, boolean isPaid) {
+	public ChecksListUserDTO(int id, String firstName, String lastName, String email, double priceForOrder,
+			boolean isPaid) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -26,9 +26,11 @@ public class ChecksListUserDTO {
 
 	public ChecksListUserDTO() {
 	}
+
 	public int getId() {
 		return id;
 	}
+
 	public String getFirstName() {
 		return firstName;
 	}

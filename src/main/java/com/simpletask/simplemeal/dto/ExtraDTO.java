@@ -3,19 +3,19 @@ package com.simpletask.simplemeal.dto;
 import com.simpletask.simplemeal.model.Extra;
 
 public class ExtraDTO {
-	
+
 	private int id;
-	
+
 	private String name;
-	
+
 	private String description;
-	
+
 	private String extraType;
-	
+
 	private double price;
 
 	public ExtraDTO() {
-		
+
 	}
 
 	public ExtraDTO(int idExtra, String name, String extraType, double price, String description) {
@@ -58,8 +58,7 @@ public class ExtraDTO {
 	public void setPrice(double price) {
 		this.price = price;
 	}
-	
-	
+
 	public String getDescription() {
 		return description;
 	}
@@ -75,9 +74,4 @@ public class ExtraDTO {
 		this.description = extra.getDescription();
 		this.price = extra.getPrice();
 	}
-	
-	
-	
-	
-
 }

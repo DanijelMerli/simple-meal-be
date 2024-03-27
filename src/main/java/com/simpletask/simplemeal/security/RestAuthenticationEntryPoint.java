@@ -8,21 +8,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-
 @ControllerAdvice
-public class RestAuthenticationEntryPoint extends ResponseEntityExceptionHandler{
-    @ExceptionHandler(AccessDeniedException.class)
-    public final ResponseEntity<?> handleAccessDeniedException(Exception ex, WebRequest request) {
-        String header = request.getHeader("Authorization");
+public class RestAuthenticationEntryPoint extends ResponseEntityExceptionHandler {
+	@ExceptionHandler(AccessDeniedException.class)
+	public final ResponseEntity<?> handleAccessDeniedException(Exception ex, WebRequest request) {
+		String header = request.getHeader("Authorization");
 
-
-        if (header == null || !header.startsWith("Bearer ")) {
-            return new ResponseEntity<>("Unauthorized!", HttpStatus.UNAUTHORIZED);
-        }
-        return new ResponseEntity<>("Access denied!", HttpStatus.FORBIDDEN);
-    }
+		if (header == null || !header.startsWith("Bearer ")) {
+			return new ResponseEntity<>("Unauthorized!", HttpStatus.UNAUTHORIZED);
+		}
+		return new ResponseEntity<>("Access denied!", HttpStatus.FORBIDDEN);
+	}
 }
-
-
-
-

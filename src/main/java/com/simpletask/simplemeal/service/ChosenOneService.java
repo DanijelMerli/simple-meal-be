@@ -32,10 +32,10 @@ public class ChosenOneService {
 
 	@Autowired
 	private IMealService mealService;
-	
+
 	@Autowired
 	OrderService orderService;
-	
+
 	@Autowired
 	UserRepository userRepo;
 
@@ -62,7 +62,7 @@ public class ChosenOneService {
 		chosenOneDTO = new ChosenOneDTO(checksList, orderForToday.get().getTotalPrice());
 		return chosenOneDTO;
 	}
-	
+
 	private double calculateItemPrice(OrderItem orderItem) {
 		MealSize mealSize = orderItem.getRegularMealSize();
 		int mealCount = orderItem.getMealCount();
@@ -86,7 +86,7 @@ public class ChosenOneService {
 		orderItemRepository.saveAll(listOfOrderItems);
 		return true;
 	}
-	
+
 	private boolean getIsPaid(Integer userId) {
 		List<OrderItem> orderItems = orderItemRepository.findByOrderer(userRepo.findById(userId).orElse(null));
 		for (OrderItem orderItem : orderItems) {

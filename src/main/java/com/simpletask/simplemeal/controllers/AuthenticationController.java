@@ -22,31 +22,28 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/auth/")
 public class AuthenticationController {
 
-    @Autowired
-    private UserService userService;
+	@Autowired
+	private UserService userService;
 
+	@PostMapping("login")
+	public ResponseEntity<?> postLogin(@RequestBody LoginRequestDTO loginRequestDTO) {
+		return new ResponseEntity<LoginResponseDTO>(userService.login(loginRequestDTO), HttpStatus.OK);
+	}
 
-    @PostMapping("login")
-    public ResponseEntity<?> postLogin(@RequestBody LoginRequestDTO loginRequestDTO) {
-        return new ResponseEntity<LoginResponseDTO>(userService.login(loginRequestDTO), HttpStatus.OK);
-    }
+	@PostMapping("dummyRegistration")
+	public ResponseEntity<?> postReg() {
+		userService.addDummy();
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
-    @PostMapping("dummyRegistration")
-    public ResponseEntity<?> postReg() {
-        userService.addDummy();
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-    
-    @PostMapping(value="register", consumes = MediaType.APPLICATION_JSON_VALUE, 
-			  produces = MediaType.APPLICATION_JSON_VALUE)
-	  public ResponseEntity<String> createUser(@Valid @RequestBody UserDTO userDTO) throws Exception {
+	@PostMapping(value = "register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> createUser(@Valid @RequestBody UserDTO userDTO) throws Exception {
 		try {
-			   User savedUser =userService.registerUser(userDTO);
-          	return  new ResponseEntity<>(HttpStatus.OK);
-          } catch(Exception e) {
-          	
-          	throw new InvalidRegisterException("Registration failed");
-          }
-  }
+			User savedUser = userService.registerUser(userDTO);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
 
+			throw new InvalidRegisterException("Registration failed");
+		}
+	}
 }
