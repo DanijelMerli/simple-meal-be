@@ -64,6 +64,14 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> exceptionHandler(ConstraintViolationException e) {
         return getErrorResponseResponseEntity(e);
     }
+    
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponse> exceptionHandler(IllegalArgumentException e) {
+    	ErrorResponse errorResponse = new ErrorResponse(e.getMessage(), HttpStatus.BAD_REQUEST.value());
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
 }
 
 

@@ -141,7 +141,7 @@ public class WeeklyMenuService {
 		WeeklyMenu weeklyMenu = getWeeklyMenu(dateParse,weeklyMenuDTO);
 		
 		if (weeklyMenu!=null) 
-			return null;
+			throw new IllegalArgumentException("Menu already exists");
 		
 		
 		weeklyMenu = new WeeklyMenu();
