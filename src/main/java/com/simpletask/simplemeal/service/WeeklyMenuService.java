@@ -41,4 +41,22 @@ public class WeeklyMenuService {
 		return calendar.getTime();
 	}
 
+	public WeeklyMenuDTO getNextWeeklyMenuByStartDate() {
+		Date startOfWeek = getStartOfNextWeek();
+		Date endOfWeek = getEndOfWeek(startOfWeek);
+		Optional<WeeklyMenu> optionalWeeklyMenu = weekRepo.findByStartDateBetween(startOfWeek, endOfWeek);
+		return optionalWeeklyMenu.map(WeeklyMenuDTO::new).orElse(null);
+	}
+
+	public Date getStartOfNextWeek() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+		calendar.add(Calendar.DAY_OF_WEEK, 7);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		return calendar.getTime();
+	}
+
 }
