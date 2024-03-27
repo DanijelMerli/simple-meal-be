@@ -18,60 +18,60 @@ import org.springframework.web.bind.annotation.*;
 @Validated
 public class MealController {
 
-	@Autowired
-	private IMealService mealService;
+    @Autowired
+    private IMealService mealService;
 
-	@GetMapping
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<AllMealsDTO> getAllMeals() throws Exception {
-		return new ResponseEntity<AllMealsDTO>(mealService.getAllMeals(), HttpStatus.OK);
-	}
+    @GetMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<AllMealsDTO> getAllMeals() throws Exception {
+        return new ResponseEntity<AllMealsDTO>(mealService.getAllMeals(), HttpStatus.OK);
+    }
 
-	@PostMapping("/regular")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<RegularMealDTO> addRegularMeal(@Valid @RequestBody CreateRegularMealDTO dto,
-			BindingResult bindingResult) {
-		return new ResponseEntity<RegularMealDTO>(mealService.addRegularMeal(dto), HttpStatus.CREATED);
-	}
+    @PostMapping("/regular")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<RegularMealDTO> addRegularMeal(@Valid @RequestBody CreateRegularMealDTO dto,
+                                                         BindingResult bindingResult) {
+        return new ResponseEntity<RegularMealDTO>(mealService.addRegularMeal(dto), HttpStatus.CREATED);
+    }
 
-	@PostMapping("/fit")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<FitMealDTO> addFitMeal(@Valid @RequestBody CreateFitMealDTO dto,
-			BindingResult bindingResult) {
-		return new ResponseEntity<FitMealDTO>(mealService.addFitMeal(dto), HttpStatus.CREATED);
-	}
+    @PostMapping("/fit")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<FitMealDTO> addFitMeal(@Valid @RequestBody CreateFitMealDTO dto,
+                                                 BindingResult bindingResult) {
+        return new ResponseEntity<FitMealDTO>(mealService.addFitMeal(dto), HttpStatus.CREATED);
+    }
 
-	@PostMapping("/extra")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<ExtraDTO> addExtraMeal(@Valid @RequestBody CreateExtraDTO dto, BindingResult bindingResult) {
-		return new ResponseEntity<ExtraDTO>(mealService.addExtraMeal(dto), HttpStatus.CREATED);
-	}
+    @PostMapping("/extra")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<ExtraDTO> addExtraMeal(@Valid @RequestBody CreateExtraDTO dto, BindingResult bindingResult) {
+        return new ResponseEntity<ExtraDTO>(mealService.addExtraMeal(dto), HttpStatus.CREATED);
+    }
 
-	@PutMapping("/regular/{id}")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<RegularMealDTO> editRegularMeal(@PathVariable("id") int id,
-			@Valid @RequestBody CreateRegularMealDTO dto, BindingResult bindingResult) {
-		return new ResponseEntity<RegularMealDTO>(mealService.editRegularMeal(dto, id), HttpStatus.OK);
-	}
+    @PutMapping("/regular/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<RegularMealDTO> editRegularMeal(@PathVariable("id") int id,
+                                                          @Valid @RequestBody CreateRegularMealDTO dto, BindingResult bindingResult) {
+        return new ResponseEntity<RegularMealDTO>(mealService.editRegularMeal(dto, id), HttpStatus.OK);
+    }
 
-	@PutMapping("/fit/{id}")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<FitMealDTO> editFitMeal(@PathVariable("id") int id, @Valid @RequestBody CreateFitMealDTO dto,
-			BindingResult bindingResult) {
-		return new ResponseEntity<FitMealDTO>(mealService.editFitMeal(dto, id), HttpStatus.OK);
-	}
+    @PutMapping("/fit/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<FitMealDTO> editFitMeal(@PathVariable("id") int id, @Valid @RequestBody CreateFitMealDTO dto,
+                                                  BindingResult bindingResult) {
+        return new ResponseEntity<FitMealDTO>(mealService.editFitMeal(dto, id), HttpStatus.OK);
+    }
 
-	@PutMapping("/extra/{id}")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<ExtraDTO> editExtraMeal(@PathVariable("id") int id, @Valid @RequestBody CreateExtraDTO dto,
-			BindingResult bindingResult) {
-		return new ResponseEntity<ExtraDTO>(mealService.editExtraMeal(dto, id), HttpStatus.OK);
-	}
+    @PutMapping("/extra/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<ExtraDTO> editExtraMeal(@PathVariable("id") int id, @Valid @RequestBody CreateExtraDTO dto,
+                                                  BindingResult bindingResult) {
+        return new ResponseEntity<ExtraDTO>(mealService.editExtraMeal(dto, id), HttpStatus.OK);
+    }
 
-	@DeleteMapping("/{id}")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<?> deleteMeal(@PathVariable("id") int id) {
-		this.mealService.deleteMeal(id);
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	}
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<?> deleteMeal(@PathVariable("id") int id) {
+        this.mealService.deleteMeal(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

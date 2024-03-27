@@ -41,7 +41,7 @@ public class MealService implements IMealService {
                         ((FitMeal) meal).getPrice() :
                         (meal instanceof Extra ?
                                 ((Extra) meal).getPrice() :
-                                    throwNotFoundException(id)));
+                                throwNotFoundException(id)));
     }
 
     private double calculatePriceForRegularMeal(RegularMeal rm, MealSize mealSize) {
