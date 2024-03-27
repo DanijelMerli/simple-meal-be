@@ -20,7 +20,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 	boolean existsByEmail(String email);
 
-	@Query("SELECT u FROM User u WHERE u.role.name = 'THE_CHOSEN_ONE'")
+	@Query("SELECT u FROM User u WHERE u.role.name = 'ROLE_THE_CHOSEN_ONE'")
 	User findChosenOne();
 
 }
