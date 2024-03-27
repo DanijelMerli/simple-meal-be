@@ -73,7 +73,7 @@ public class MealService implements IMealService {
 
         AllMealsDTO allMeals = new AllMealsDTO((ArrayList<RegularMealDTO>) regularMeals, (ArrayList<FitMealDTO>) fitMeals, (ArrayList<ExtraDTO>) extras);
 
-        if (regularMeals.size() + fitMeals.size() + extras.size() != meals.size()) { // protiv uroka
+        if (regularMeals.size() + fitMeals.size() + extras.size() != meals.size()) {
             throw new NotFoundException("Meal not found");
         }
 
