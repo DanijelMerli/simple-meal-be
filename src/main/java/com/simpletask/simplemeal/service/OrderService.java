@@ -1,12 +1,15 @@
 package com.simpletask.simplemeal.service;
 
 import com.simpletask.simplemeal.dto.OrderDTO;
+import com.simpletask.simplemeal.model.Extra;
+import com.simpletask.simplemeal.model.FitMeal;
 import com.simpletask.simplemeal.model.Order;
 import com.simpletask.simplemeal.model.OrderItem;
 import com.simpletask.simplemeal.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
 import java.util.*;
 
 @Service
@@ -33,7 +36,17 @@ public class OrderService implements IOrderService {
 			return addOrder(newOrder);
 		});
 		double newTotalPrice = 0.0;
+        LocalTime currentTime = LocalTime.now();
+        int currentHour = currentTime.getHour();
+
 		for (OrderItem item : orderItemList) {
+			if ((item.getMeal() instanceof Extra) && (dto.isForToday()   || (!dto.isForToday() && currentHour>17)))
+				throw new IllegalArgumentException("Extras should be ordered a day early before 17h");
+			if (item.getMeal() instanceof FitMeal) {
+				FitMeal fit = (FitMeal) item.getMeal();
+				if (fit.isShouldOrderEarly() && (dto.isForToday() || (dto.isForToday() && currentHour>17)))
+					throw new IllegalArgumentException("Fit meal  should be ordered a day early before 17h");
+			}
 			item.setOrder(order);
 			this.orderItemService.addOrderItem(item);
 		}
