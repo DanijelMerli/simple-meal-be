@@ -21,25 +21,22 @@ public class DailyMenuController {
 	DailyMenuService dailyService;
 	
 	@GetMapping("daily-menu/today")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-    public ResponseEntity<DailyMenuDTO> getDailyMenuForToday() throws Exception {
-        DailyMenuDTO dailyMenuDTO = dailyService.getDailyMenuForToday();
-        if (dailyMenuDTO != null) {
-            return new ResponseEntity<>(dailyMenuDTO, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-	
-	@GetMapping("daily-menu/tomorrow")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-    public ResponseEntity<DailyMenuDTO> getDailyMenuForTomorrow() throws Exception {
-        DailyMenuDTO dailyMenuDTO = dailyService.getDailyMenuForTomorrow();
-        if (dailyMenuDTO != null) {
-            return new ResponseEntity<>(dailyMenuDTO, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+	public ResponseEntity<DailyMenuDTO> getDailyMenuForToday() throws Exception {
+		DailyMenuDTO dailyMenuDTO = dailyService.getDailyMenuForToday();
+		if (dailyMenuDTO != null) {
+			return new ResponseEntity<>(dailyMenuDTO, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 
+	@GetMapping("daily-menu/tomorrow")
+	public ResponseEntity<DailyMenuDTO> getDailyMenuForTomorrow() throws Exception {
+		DailyMenuDTO dailyMenuDTO = dailyService.getDailyMenuForTomorrow();
+		if (dailyMenuDTO != null) {
+			return new ResponseEntity<>(dailyMenuDTO, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 }

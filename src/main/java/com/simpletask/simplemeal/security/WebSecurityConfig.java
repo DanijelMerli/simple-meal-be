@@ -71,6 +71,6 @@ public class WebSecurityConfig {
 	public WebSecurityCustomizer webSecurityCustomizer() {
 		return (web) -> web.ignoring().requestMatchers(HttpMethod.POST, "/socket/**", "/api/auth/**").requestMatchers(
 				HttpMethod.GET, "/", "/webjars/**", "/*.html", "favicon.ico", "/*/*.html", "/*/*.css", "/*/*.js",
-				"/socket/**");
+				"/socket/**", "/api/meals/daily-menu/**", "/api/meals/this-week", "/api/meals/next-week");
 	}
 }
