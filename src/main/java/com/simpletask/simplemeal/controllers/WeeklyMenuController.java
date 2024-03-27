@@ -22,7 +22,7 @@ public class WeeklyMenuController {
 	WeeklyMenuService weekService;
 	
 	@GetMapping("this-week")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_THE_CHOSEN_ONE')")
     public ResponseEntity<WeeklyMenuDTO> getWeeklyMenu() {
         WeeklyMenuDTO weeklyMenuDTO = weekService.getWeeklyMenuByStartDate();
         if (weeklyMenuDTO != null) {
