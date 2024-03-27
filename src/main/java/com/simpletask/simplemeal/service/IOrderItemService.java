@@ -6,8 +6,9 @@ import com.simpletask.simplemeal.model.OrderItem;
 import java.util.List;
 
 public interface IOrderItemService {
-    OrderItem convertDTOtoModel(OrderItemDTO dto, String userEmail);
-    List<OrderItem> convertDTOListToModelList(List<OrderItemDTO> dtoList, String userEmail);
+	OrderItem convertDTOtoModel(OrderItemDTO dto, String userEmail);
 
-    void addOrderItem(OrderItem item);
+	List<OrderItem> convertDTOListToModelList(List<OrderItemDTO> dtoList, String userEmail);
+
+	void addOrderItem(OrderItem item);
 }

@@ -12,7 +12,7 @@ public class RoleService implements IRoleService{
     private RoleRepository roleRepository;
     @Override
     public void assignChosenOneRole(User user) {
-        Role chosenOneRole = roleRepository.findByName("THE_CHOSEN_ONE");
+        Role chosenOneRole = roleRepository.findByName("ROLE_THE_CHOSEN_ONE");
         user.setRole(chosenOneRole);
     }
 

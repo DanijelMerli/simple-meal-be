@@ -7,19 +7,18 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class WeeklyMenuDTO {
-	
+
 	private int idWeeklyMenu;
-	
+
 	private List<DailyMenuDTO> dailyMenu;
-	
+
 	private String startDate;
 	
 	private byte[] imageData;
 
 	public WeeklyMenuDTO() {
-		
+
 	}
 
 	public WeeklyMenuDTO(int idWeeklyMenu, List<DailyMenuDTO> dailyMenu, String startDate) {
@@ -52,7 +51,7 @@ public class WeeklyMenuDTO {
 	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
-	
+
 	public WeeklyMenuDTO(WeeklyMenu weekly) {
 		this.idWeeklyMenu = weekly.getId();
 		List<DailyMenuDTO> dailyMenuDTOs = new ArrayList<>();
@@ -65,7 +64,5 @@ public class WeeklyMenuDTO {
 		if (weekly.getImage()!=null) //new
 			this.imageData= weekly.getImage().getData();
 	}
-	
-	
 
 }

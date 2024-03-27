@@ -1,14 +1,5 @@
 package com.simpletask.simplemeal.controllers;
 
-
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,9 +34,10 @@ import jakarta.validation.Valid;
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/meals/")
 public class WeeklyMenuController {
-	
+
 	@Autowired
 	WeeklyMenuService weekService;
+
 	
 	@Autowired
 	ImageService imageService;
@@ -94,17 +86,28 @@ public class WeeklyMenuController {
 		}
 		}
 
-    @GetMapping("next-week")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-    public ResponseEntity<WeeklyMenuDTO> getNextWeeklyMenu() {
-        WeeklyMenuDTO weeklyMenuDTO = weekService.getNextWeeklyMenuByStartDate();
-        if (weeklyMenuDTO != null) {
-            return new ResponseEntity<>(weeklyMenuDTO, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
 
+	@GetMapping("this-week")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_THE_CHOSEN_ONE')")
+	public ResponseEntity<WeeklyMenuDTO> getWeeklyMenu() {
+		WeeklyMenuDTO weeklyMenuDTO = weekService.getWeeklyMenuByStartDate();
+		if (weeklyMenuDTO != null) {
+			return new ResponseEntity<>(weeklyMenuDTO, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@GetMapping("next-week")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+	public ResponseEntity<WeeklyMenuDTO> getNextWeeklyMenu() {
+		WeeklyMenuDTO weeklyMenuDTO = weekService.getNextWeeklyMenuByStartDate();
+		if (weeklyMenuDTO != null) {
+			return new ResponseEntity<>(weeklyMenuDTO, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 }
 
 

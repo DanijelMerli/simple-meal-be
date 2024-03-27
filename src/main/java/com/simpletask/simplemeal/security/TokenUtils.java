@@ -27,42 +27,23 @@ public class TokenUtils {
 
 	@Value("${jwt.secret}")
 	public String SECRET;
-	@Value("6000000") // 30 min
+	@Value("6000000")
 	private int EXPIRES_IN;
-	
-//	@Value("1800000")
-//	private int REFRESH_EXPIRES_IN;
 
 	@Value("Authorization")
 	private String AUTH_HEADER;
-	
+
 	private static final String AUDIENCE_WEB = "web";
 
 	private SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS256;
-	
 
 	public String generateToken(String username) {
 		User u = userRepo.findUserByEmail(username);
-		return Jwts.builder()
-				.setIssuer(APP_NAME)
-				.setSubject(username)
-				.setAudience(generateAudience())
-				.setIssuedAt(new Date())
-				.setExpiration(generateExpirationDate(EXPIRES_IN))
-				.claim("role", u.getRole().getName())
-				.claim("id", u.getId())
+		return Jwts.builder().setIssuer(APP_NAME).setSubject(username).setAudience(generateAudience())
+				.setIssuedAt(new Date()).setExpiration(generateExpirationDate(EXPIRES_IN))
+				.claim("role", u.getRole().getName()).claim("id", u.getId())
 				.signWith(getSignInKey(), SIGNATURE_ALGORITHM).compact();
 	}
-	
-//	public String generateRefreshToken(String username) {
-//		return Jwts.builder()
-//				.setIssuer(APP_NAME)
-//				.setSubject(username)
-//				.setAudience(generateAudience())
-//				.setIssuedAt(new Date())
-//				.setExpiration(generateExpirationDate(REFRESH_EXPIRES_IN))
-//				.signWith(getSignInKey(), SIGNATURE_ALGORITHM).compact();
-//	}
 
 	private Key getSignInKey() {
 		byte[] keyBytes = Decoders.BASE64.decode(SECRET);
@@ -70,7 +51,7 @@ public class TokenUtils {
 	}
 
 	private String generateAudience() {
-		
+
 		return AUDIENCE_WEB;
 	}
 
@@ -81,7 +62,6 @@ public class TokenUtils {
 	public String getToken(HttpServletRequest request) {
 		String authHeader = getAuthHeaderFromHeader(request);
 
-		
 		if (authHeader != null && authHeader.startsWith("Bearer ")) {
 			return authHeader.substring(7);
 		}
@@ -91,7 +71,7 @@ public class TokenUtils {
 
 	public String getUsernameFromToken(String token) {
 		String username;
-		
+
 		try {
 			final Claims claims = this.getAllClaimsFromToken(token);
 			username = claims.getSubject();
@@ -100,7 +80,7 @@ public class TokenUtils {
 		} catch (Exception e) {
 			username = null;
 		}
-		
+
 		return username;
 	}
 
@@ -116,7 +96,6 @@ public class TokenUtils {
 		}
 		return issueAt;
 	}
-
 
 	public String getAudienceFromToken(String token) {
 		String audience;
@@ -141,23 +120,20 @@ public class TokenUtils {
 		} catch (Exception e) {
 			expiration = null;
 		}
-		
+
 		return expiration;
 	}
 
 	private Claims getAllClaimsFromToken(String token) {
 		Claims claims;
 		try {
-			claims = Jwts.parser()
-					.setSigningKey(SECRET)
-					.parseClaimsJws(token)
-					.getBody();
+			claims = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody();
 		} catch (ExpiredJwtException ex) {
 			throw ex;
 		} catch (Exception e) {
 			claims = null;
 		}
-		
+
 		return claims;
 	}
 
@@ -166,15 +142,8 @@ public class TokenUtils {
 		final String username = getUsernameFromToken(token);
 		final Date created = getIssuedAtDateFromToken(token);
 
-		return (username != null
-			&& username.equals(userDetails.getUsername()));
+		return (username != null && username.equals(userDetails.getUsername()));
 	}
-	
-
-//	private Boolean isCreatedBeforeLastPasswordReset(Date created, Date lastPasswordReset) {
-//		return (lastPasswordReset != null && created.before(lastPasswordReset));
-//	}
-	
 
 	public int getExpiredIn() {
 		return EXPIRES_IN;
@@ -183,5 +152,5 @@ public class TokenUtils {
 	public String getAuthHeaderFromHeader(HttpServletRequest request) {
 		return request.getHeader(AUTH_HEADER);
 	}
-	
+
 }
