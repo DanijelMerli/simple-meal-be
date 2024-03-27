@@ -3,16 +3,14 @@ package com.simpletask.simplemeal.dto;
 public class LoginResponseDTO {
 
 	private String token;
-//	private String refreshToken;
 	
 	public LoginResponseDTO() {
 		super();
 	}
 	
-	public LoginResponseDTO(String accessToken /*, String refreshToken */) {
+	public LoginResponseDTO(String accessToken) {
 		super();
 		this.token = accessToken;
-//		this.refreshToken = refreshToken;
 	}
 
 	public String getToken() {
@@ -22,13 +20,5 @@ public class LoginResponseDTO {
 	public void setToken(String token) {
 		this.token = token;
 	}
-
-//	public String getRefreshToken() {
-//		return refreshToken;
-//	}
-//
-//	public void setRefreshToken(String refreshToken) {
-//		this.refreshToken = refreshToken;
-//	}
 	
 }

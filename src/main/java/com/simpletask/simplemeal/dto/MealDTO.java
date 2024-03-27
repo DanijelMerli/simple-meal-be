@@ -3,16 +3,13 @@ package com.simpletask.simplemeal.dto;
 import com.simpletask.simplemeal.model.Meal;
 
 public class MealDTO {
-	
+
 	private int id;
-	
+
 	private String name;
 
 	private String description;
 
-	
-	
-	
 	public MealDTO(int idFoodMenu, String name, String description) {
 		super();
 		this.id = idFoodMenu;
@@ -20,25 +17,17 @@ public class MealDTO {
 		this.description = description;
 	}
 
-
-
-
 	public MealDTO() {
-		
-	}
-	
-	
 
+	}
 
 	public String getName() {
 		return name;
 	}
 
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
 
 	public int getId() {
 		return id;
@@ -61,8 +50,5 @@ public class MealDTO {
 		this.name = meal.getName();
 		this.description = meal.getDescription();
 	}
-
-	
-	
 
 }

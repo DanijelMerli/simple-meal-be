@@ -20,13 +20,14 @@ import java.security.Principal;
 @Validated
 public class OrderController {
 
-    @Autowired
-    private IOrderService orderService;
+	@Autowired
+	private IOrderService orderService;
 
-    @PostMapping()
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-    public ResponseEntity<?> addOrder(Principal principal,@Valid @RequestBody OrderDTO dto, BindingResult bindingResult) throws NotFoundException {
-        orderService.addOrder(dto, principal.getName());
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+	@PostMapping()
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_THE_CHOSEN_ONE')")
+	public ResponseEntity<?> addOrder(Principal principal, @Valid @RequestBody OrderDTO dto,
+			BindingResult bindingResult) throws NotFoundException {
+		orderService.addOrder(dto, principal.getName());
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 }

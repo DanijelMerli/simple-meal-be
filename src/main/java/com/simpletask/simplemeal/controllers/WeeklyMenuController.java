@@ -1,6 +1,5 @@
 package com.simpletask.simplemeal.controllers;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +16,10 @@ import com.simpletask.simplemeal.service.WeeklyMenuService;
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/meals/")
 public class WeeklyMenuController {
-	
+
 	@Autowired
 	WeeklyMenuService weekService;
-	
+
 	@GetMapping("this-week")
 	public ResponseEntity<WeeklyMenuDTO> getWeeklyMenu() {
 		WeeklyMenuDTO weeklyMenuDTO = weekService.getWeeklyMenuByStartDate();
