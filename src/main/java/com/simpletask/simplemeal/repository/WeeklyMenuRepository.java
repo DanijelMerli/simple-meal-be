@@ -11,6 +11,8 @@ import org.springframework.data.jpa.repository.Query;
 public interface WeeklyMenuRepository extends JpaRepository<WeeklyMenu, Integer> {
 
 	Optional<WeeklyMenu> findByStartDateBetween(Date startDate, Date endDate);
+	
+	Optional<WeeklyMenu> findByStartDate(Date startDate);
 
 	Optional<WeeklyMenu> findById(Integer id);
 

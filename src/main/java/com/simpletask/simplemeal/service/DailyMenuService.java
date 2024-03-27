@@ -100,4 +100,9 @@ public class DailyMenuService {
 			return false;
 		}
 	}
+	
+	public boolean isHolidayTomorrow()  {
+		Date tomorrow = getTomorrow();
+		return isHoliday(tomorrow);
+	}
 }

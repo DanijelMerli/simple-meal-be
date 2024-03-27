@@ -14,6 +14,8 @@ public class WeeklyMenuDTO {
 	private List<DailyMenuDTO> dailyMenu;
 
 	private String startDate;
+	
+	private byte[] imageData;
 
 	public WeeklyMenuDTO() {
 
@@ -59,6 +61,8 @@ public class WeeklyMenuDTO {
 		this.dailyMenu = dailyMenuDTOs;
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy.");
 		this.startDate = dateFormat.format(weekly.getStartDate());
+		if (weekly.getImage()!=null) //new
+			this.imageData= weekly.getImage().getData();
 	}
 
 }
