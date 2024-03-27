@@ -108,6 +108,16 @@ public class DailyMenu implements Serializable{
 	public void setDessert(Extra dessert) {
 		this.dessert = dessert;
 	}
+	
+	
+
+	public WeeklyMenu getWeeklyMenu() {
+		return weeklyMenu;
+	}
+
+	public void setWeeklyMenu(WeeklyMenu weeklyMenu) {
+		this.weeklyMenu = weeklyMenu;
+	}
 
 	@Override
 	public String toString() {
@@ -121,4 +131,6 @@ public class DailyMenu implements Serializable{
 				", weeklyMenu=" + weeklyMenu +
 				'}';
 	}
+	
+	
 }

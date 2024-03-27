@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.simpletask.simplemeal.dto.WeeklyMenuDTO;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -22,6 +24,9 @@ public class WeeklyMenu implements Serializable{
 
 	@Column(name = "start_Date")
 	private Date startDate;
+	
+	@OneToOne(mappedBy = "weeklyMenu")
+    private Image image;
 
 	public WeeklyMenu() {
 		
@@ -32,6 +37,8 @@ public class WeeklyMenu implements Serializable{
 		this.dailyMenu = dailyMenu;
 		this.startDate = startDate;
 	}
+	
+	
 
 	public WeeklyMenu(List<DailyMenu> dailyMenu, Date startDate) {
 		this.dailyMenu = dailyMenu;
@@ -61,5 +68,15 @@ public class WeeklyMenu implements Serializable{
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
+
+	public Image getImage() {
+		return image;
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
+	}
 	
+	
+
 }
