@@ -56,6 +56,7 @@ public class ChosenOneService {
 					dto.setEmail(entry.getKey().getEmail());
 					dto.setPriceForOrder(entry.getValue());
 					dto.setPaid(getIsPaid(entry.getKey().getId()));
+					dto.setId(entry.getKey().getId());
 					return dto;
 				}).collect(Collectors.toList());
 		chosenOneDTO = new ChosenOneDTO(checksList, orderForToday.get().getTotalPrice());

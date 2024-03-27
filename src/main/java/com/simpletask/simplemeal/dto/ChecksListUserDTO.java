@@ -1,6 +1,7 @@
 package com.simpletask.simplemeal.dto;
 
 public class ChecksListUserDTO {
+	private int id;
 
 	private String firstName;
 
@@ -13,8 +14,9 @@ public class ChecksListUserDTO {
 	private boolean isPaid;
 
 
-	public ChecksListUserDTO(String firstName, String lastName, String email, double priceForOrder, boolean isPaid) {
+	public ChecksListUserDTO(int id, String firstName, String lastName, String email, double priceForOrder, boolean isPaid) {
 		super();
+		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
@@ -24,9 +26,15 @@ public class ChecksListUserDTO {
 
 	public ChecksListUserDTO() {
 	}
-
+	public int getId() {
+		return id;
+	}
 	public String getFirstName() {
 		return firstName;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public void setFirstName(String firstName) {
