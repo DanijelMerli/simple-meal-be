@@ -9,18 +9,13 @@ import jakarta.persistence.*;
 @PrimaryKeyJoinColumn(name = "id_extra")
 public class Extra extends Meal {
 
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
-//	@Column(name = "extra_id", nullable = false)
-//	private int id;
-
 	@Column(name = "extra_type")
 	private ExtraType extraType;
-	
+
 	private double price;
 
 	public Extra() {
-		
+
 	}
 
 	public Extra(int id, String name, String description, ExtraType extraType, double price) {
@@ -35,14 +30,6 @@ public class Extra extends Meal {
 		this.extraType = extraType;
 		this.price = price;
 	}
-
-//	public int getId() {
-//		return id;
-//	}
-//
-//	public void setId(int id) {
-//		this.id = id;
-//	}
 
 	public ExtraType getExtraType() {
 		return extraType;
@@ -62,12 +49,7 @@ public class Extra extends Meal {
 
 	@Override
 	public String toString() {
-		return "Extra{" +
-				"id=" + super.getId() +
-				", name='" + super.getName() + '\'' +
-				", description='" + super.getDescription() + '\'' +
-				"extraType=" + extraType +
-				", price=" + price +
-				'}';
+		return "Extra{" + "id=" + super.getId() + ", name='" + super.getName() + '\'' + ", description='"
+				+ super.getDescription() + '\'' + "extraType=" + extraType + ", price=" + price + '}';
 	}
 }

@@ -20,16 +20,11 @@ import jakarta.validation.Valid;
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
-	
+
 	private IUserService userService;
-//	private  UserRepository userRepository;
-	
+
 	@Autowired
 	public UserController(UserService userService) {
-
 		this.userService = userService;
 	}
-
-	
-	 
 }

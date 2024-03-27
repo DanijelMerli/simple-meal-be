@@ -31,7 +31,7 @@ public class OrderItemService implements IOrderItemService {
     @Override
     public OrderItem convertDTOtoModel(OrderItemDTO dto, String userEmail) {
         User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new NotFoundException("User not found")); // me bi trebalo da se desi ali eto protiv uroka
+                .orElseThrow(() -> new NotFoundException("User not found"));
         Meal meal = mealRepository.findById(dto.getMealId())
                 .orElseThrow(() -> new NotFoundException("Meal not found"));
         OrderItem orderItem = new OrderItem();

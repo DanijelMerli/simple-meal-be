@@ -9,27 +9,24 @@ import jakarta.validation.ConstraintValidatorContext;
 
 public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, String> {
 
-	    @Autowired
-	    UserRepository ur;
-	    
-	    private boolean isEmailUnique(String email) {
-	    	if (!ur.existsByEmail(email))
-	        return true; 
-	    	
-	    	return false;
-	    }
+	@Autowired
+	UserRepository ur;
 
-	    @Override
-	    public void initialize(UniqueEmail constraintAnnotation) {
-	    }
-
-	    @Override
-	    public boolean isValid(String email, ConstraintValidatorContext context) {
-	        if (email == null) {
-	            return true; 
-	        }
-	        return isEmailUnique(email);
-	    }
+	private boolean isEmailUnique(String email) {
+		if (!ur.existsByEmail(email))
+			return true;
+		return false;
 	}
 
+	@Override
+	public void initialize(UniqueEmail constraintAnnotation) {
+	}
 
+	@Override
+	public boolean isValid(String email, ConstraintValidatorContext context) {
+		if (email == null) {
+			return true;
+		}
+		return isEmailUnique(email);
+	}
+}

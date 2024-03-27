@@ -38,7 +38,6 @@ public class UserService implements IUserService {
 	@Autowired
 	private RoleRepository roleRepository;
 
-	private ModelMapper modelMapper;
 
 	public User findUserByEmail(String email) {
 		return userRepo.findUserByEmail(email);

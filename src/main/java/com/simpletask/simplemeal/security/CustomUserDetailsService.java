@@ -14,17 +14,17 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Autowired
 	private final UserRepository userRepository;
 
-	public CustomUserDetailsService(UserRepository userRepository) {this.userRepository = userRepository;}
+	public CustomUserDetailsService(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
+
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		User user = userRepository.findUserByEmail(email);
-		
+
 		if (user == null) {
 			throw new UsernameNotFoundException(String.format("No user found with email '%s'.", email));
-		} 
-//		else if(!user.isActivated()) {
-//			throw new UserNotActivatedException("User with email " + email+ " is not activated");
-//		}
-		else return user;
+		} else
+			return user;
 	}
 }

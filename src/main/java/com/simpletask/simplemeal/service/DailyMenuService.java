@@ -18,7 +18,7 @@ public class DailyMenuService {
 
 	@Autowired
 	DailyMenuRepository dailyRepo;
-	
+
 	public DailyMenuDTO getDailyMenuForToday() throws Exception {
 		Date today = getToday();
 		if (isWeekend()) {

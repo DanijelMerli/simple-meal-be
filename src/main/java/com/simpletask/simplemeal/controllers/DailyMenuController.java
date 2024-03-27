@@ -16,30 +16,29 @@ import com.simpletask.simplemeal.service.DailyMenuService;
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/meals/")
 public class DailyMenuController {
-	
+
 	@Autowired
 	DailyMenuService dailyService;
-	
+
 	@GetMapping("daily-menu/today")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_THE_CHOSEN_ONE')")
-    public ResponseEntity<DailyMenuDTO> getDailyMenuForToday() throws Exception {
-        DailyMenuDTO dailyMenuDTO = dailyService.getDailyMenuForToday();
-        if (dailyMenuDTO != null) {
-            return new ResponseEntity<>(dailyMenuDTO, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-	
+	public ResponseEntity<DailyMenuDTO> getDailyMenuForToday() throws Exception {
+		DailyMenuDTO dailyMenuDTO = dailyService.getDailyMenuForToday();
+		if (dailyMenuDTO != null) {
+			return new ResponseEntity<>(dailyMenuDTO, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+
 	@GetMapping("daily-menu/tomorrow")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_THE_CHOSEN_ONE')")
-    public ResponseEntity<DailyMenuDTO> getDailyMenuForTomorrow() throws Exception {
-        DailyMenuDTO dailyMenuDTO = dailyService.getDailyMenuForTomorrow();
-        if (dailyMenuDTO != null) {
-            return new ResponseEntity<>(dailyMenuDTO, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
+	public ResponseEntity<DailyMenuDTO> getDailyMenuForTomorrow() throws Exception {
+		DailyMenuDTO dailyMenuDTO = dailyService.getDailyMenuForTomorrow();
+		if (dailyMenuDTO != null) {
+			return new ResponseEntity<>(dailyMenuDTO, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 }
