@@ -1,5 +1,8 @@
 package com.simpletask.simplemeal.controllers;
 
+import java.io.IOException;
+import java.text.ParseException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,16 +47,7 @@ public class WeeklyMenuController {
 	
 	
 	
-	@GetMapping("this-week")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-    public ResponseEntity<WeeklyMenuDTO> getWeeklyMenu() {
-        WeeklyMenuDTO weeklyMenuDTO = weekService.getWeeklyMenuByStartDate();
-        if (weeklyMenuDTO != null) {
-            return new ResponseEntity<>(weeklyMenuDTO, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+	
 	
 	
 	@PostMapping("save-weekly-menu")
