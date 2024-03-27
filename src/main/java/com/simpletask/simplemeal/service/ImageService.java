@@ -50,4 +50,9 @@ public class ImageService implements IImageService {
 		return image;
 	}
 
+	public Image getImageById(int id) {
+		WeeklyMenu menu = weekRepo.findById(id).orElse(null);
+		return imageRepo.findByWeeklyMenu(menu).orElse(null);
+	}
+
 }

@@ -11,4 +11,5 @@ public interface IImageService {
 
 	public WeeklyMenu addImage(MultipartFile file,Integer idMenu);
 	public Image getImageByDate(Date date);
+	Image getImageById(int id);
 }

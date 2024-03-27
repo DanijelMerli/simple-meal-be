@@ -3,8 +3,11 @@ package com.simpletask.simplemeal.controllers;
 import java.io.IOException;
 import java.text.ParseException;
 
+import com.simpletask.simplemeal.model.Image;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -44,11 +47,6 @@ public class WeeklyMenuController {
 	
 	@Autowired
 	ImageService imageService;
-	
-	
-	
-	
-	
 	
 	@PostMapping("save-weekly-menu")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_THE_CHOSEN_ONE')")
@@ -100,6 +98,17 @@ public class WeeklyMenuController {
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+	}
+
+
+	@GetMapping("image/{id}")
+	public ResponseEntity<byte[]> getImage(@PathVariable int id) {
+		Image image = imageService.getImageById(id);
+		byte[] imageData = image.getData();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.IMAGE_JPEG);
+		headers.setContentLength(imageData.length);
+		return new ResponseEntity<>(imageData, headers, HttpStatus.OK);
 	}
 }
 
