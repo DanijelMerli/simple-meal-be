@@ -230,7 +230,7 @@ public class WeeklyMenuService {
 				
 				if (dailyMenuDTO.getFitMealId()!=null)  {
 					if (dailyMenuDTO.getRegularMealId()==null && dailyMenu.getRegular()==null)
-						throw new IllegalArgumentException("Fit meal cannot be added without a fit meal.");
+						throw new IllegalArgumentException("Fit meal cannot be added without a Regular meal.");
 				
 				Optional<FitMeal> fitMealOptional = fitMealRepo.findById(dailyMenuDTO.getFitMealId());
 				fitMealOptional.ifPresent(fit-> dailyMenu.setFit(fit));
@@ -252,15 +252,15 @@ public class WeeklyMenuService {
 				Optional<Extra> extraMealOptional = extraMealRepo.findById(dailyMenuDTO.getDessertId());
 				extraMealOptional.ifPresent(dessert -> dailyMenu.setDessert(dessert));
 			}
-				
-				
+				System.out.println(dailyMenu.toString());
+				dailyMenuRepo.save(dailyMenu);
 		}		
 	}
-
+		System.out.println(weekMenu.toString());
 		return weekMenu;
 		
 }
-}
+
 	
 	
 	public WeeklyMenuDTO getNextWeeklyMenuByStartDate() {
