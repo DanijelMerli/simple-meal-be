@@ -1,0 +1,1 @@
+INSERT INTO roles (name) VALUES ('ROLE_THE_CHOSEN_ONE');

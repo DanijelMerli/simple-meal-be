@@ -93,6 +93,18 @@ public class WeeklyMenuController {
 	            return new ResponseEntity<>(HttpStatus.CONFLICT);
 		}
 		}
+
+    @GetMapping("next-week")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    public ResponseEntity<WeeklyMenuDTO> getNextWeeklyMenu() {
+        WeeklyMenuDTO weeklyMenuDTO = weekService.getNextWeeklyMenuByStartDate();
+        if (weeklyMenuDTO != null) {
+            return new ResponseEntity<>(weeklyMenuDTO, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }
 
 
