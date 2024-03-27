@@ -51,6 +51,7 @@ public class WeeklyMenuController {
 	
 	
 	@PostMapping("save-weekly-menu")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_THE_CHOSEN_ONE')")
 	public ResponseEntity<WeeklyMenuResponseDTO> saveWeeklyMenu(@RequestBody WeeklyMenuAdminDTO weeklyMenuDTO) throws ParseException, IOException {
 		WeeklyMenu weekMenu = weekService.saveWeeklyMenu(weeklyMenuDTO);
 		if (weekMenu != null) {
@@ -62,6 +63,7 @@ public class WeeklyMenuController {
 	}
 	
 	@PostMapping("uploadFile/{id}")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_THE_CHOSEN_ONE')")
     public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file, @PathVariable("id") int id) {
 		WeeklyMenu weekMenu = imageService.addImage(file, id);
 		if (weekMenu!=null && weekMenu.getImage()!=null) 
