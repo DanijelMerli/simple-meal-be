@@ -62,7 +62,7 @@ public class DailyMenuService {
 
 	public DailyMenuDTO getDailyMenuForTomorrow() throws Exception {
 		Date tomorrow = getTomorrow();
-		System.out.println(tomorrow);
+//		System.out.println(tomorrow);
 		if (isWeekendTomorrow()) {
 			throw new Exception("Vikend je!");
 		} else if (isHoliday(tomorrow)) {
