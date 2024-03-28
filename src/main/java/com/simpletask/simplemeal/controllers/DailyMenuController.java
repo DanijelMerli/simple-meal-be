@@ -24,18 +24,13 @@ public class DailyMenuController {
 	DailyMenuService dailyService;
 	
 	
-	
-	
-	
 	@GetMapping("/holiday")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_THE_CHOSEN_ONE')")
     public boolean isHoliday() {
         Date date = new Date();
         return dailyService.isHoliday(date);
 	}
 	
-	@GetMapping("/holidayTomorrow") 
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_THE_CHOSEN_ONE')")
+	@GetMapping("/holidayTomorrow")
     public boolean isHolidayTomorrow() {
 		
         return dailyService.isHolidayTomorrow();
@@ -44,19 +39,16 @@ public class DailyMenuController {
 	
 	
 	@GetMapping("/weekend")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_THE_CHOSEN_ONE')")
     public boolean isWeekend() {
 	       return  dailyService.isWeekend();
 	    }
 	
 	@GetMapping("/weekendTomorrow")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_THE_CHOSEN_ONE')")
     public boolean isWeekendTomorrow() {
 	       return  dailyService.isWeekendTomorrow();
 	    }
 
 	@GetMapping("daily-menu/today")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_THE_CHOSEN_ONE')")
 	public ResponseEntity<DailyMenuDTO> getDailyMenuForToday() throws Exception {
 		DailyMenuDTO dailyMenuDTO = dailyService.getDailyMenuForToday();
 		if (dailyMenuDTO != null) {
@@ -67,7 +59,6 @@ public class DailyMenuController {
 	}
 
 	@GetMapping("daily-menu/tomorrow")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_THE_CHOSEN_ONE')")
 	public ResponseEntity<DailyMenuDTO> getDailyMenuForTomorrow() throws Exception {
 		DailyMenuDTO dailyMenuDTO = dailyService.getDailyMenuForTomorrow();
 		if (dailyMenuDTO != null) {

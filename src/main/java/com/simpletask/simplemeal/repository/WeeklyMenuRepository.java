@@ -14,4 +14,6 @@ public interface WeeklyMenuRepository extends JpaRepository<WeeklyMenu, Integer>
 	
 	Optional<WeeklyMenu> findByStartDate(Date startDate);
 
+	Optional<WeeklyMenu> findById(Integer id);
+
 }
