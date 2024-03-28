@@ -24,30 +24,27 @@ public class ImageService implements IImageService {
 	@Autowired
 	WeeklyMenuRepository  weekRepo;
 	
-	public WeeklyMenu addImage(MultipartFile file,Integer idMenu) {
-		Optional<WeeklyMenu> weekMenuOptional = weekRepo.findById(idMenu);
-		if (!weekMenuOptional.isPresent()) 
-			return null;
-		WeeklyMenu weekMenue = weekMenuOptional.get();
-		 try {
-	            WeeklyMenu weekMenu = weekMenuOptional.get();
-	            byte[] fileBytes = file.getBytes();
-	            Image image = new Image();
-	            image.setData(fileBytes);
-	            image.setWeeklyMenu(weekMenu);
-	            imageRepo.save(image);
-	            weekMenu.setImage(image);
-	            return weekRepo.save(weekMenu);
-	        } catch (IOException e) {
-	            return null;
-	        }
-	}
+	public WeeklyMenu addImage(MultipartFile file,Integer idMenu) throws IOException{
+		WeeklyMenu menu = weekRepo.findById(idMenu).orElse(null);
+		byte[] fileBytes = file.getBytes();
+		Optional<Image> imageOpt = imageRepo.findByWeeklyMenu(menu);
+		Image image = imageOpt.orElseGet(Image::new);
+		image.setData(fileBytes);
+		image.setWeeklyMenu(menu);
+		imageRepo.saveAndFlush(image);
+		return menu;
+}
 	
 	
 	public Image getImageByDate(Date date) {
 		WeeklyMenu menu = weekRepo.findByStartDate(date).orElse(null);
 		Image image = imageRepo.findByWeeklyMenu(menu).orElse(null);
 		return image;
+	}
+
+	public Image getImageById(int id) {
+		WeeklyMenu menu = weekRepo.findById(id).orElse(null);
+		return imageRepo.findByWeeklyMenu(menu).orElse(null);
 	}
 
 }
