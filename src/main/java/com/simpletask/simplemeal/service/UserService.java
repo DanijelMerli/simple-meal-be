@@ -65,16 +65,6 @@ public class UserService implements IUserService {
 		return generateTokens(user.getEmail());
 	}
 
-	public void addDummy() {
-		String pass = passwordEncoder.encode("123");
-		System.out.println(pass);
-		Optional<Role> opt = roleRepository.findById(1);
-		if (opt.isPresent()) {
-			User user = new User("Kristina", "A", "andrijinkristina@gmail.com", pass, opt.get());
-			userRepo.saveAndFlush(user);
-		}
-	}
-
 	public User registerUser(UserDTO userDTO) throws Exception {
 		User user = getUserFromDTO(userDTO);
 		if (userRepo.existsByEmail(user.getEmail()))

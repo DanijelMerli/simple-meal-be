@@ -7,11 +7,11 @@ import java.util.Date;
 import java.util.Optional;
 
 public interface IOrderService {
-	void addOrder(OrderDTO dto, String userEmail);
+    void addOrder(OrderDTO dto, String userEmail);
 
-	Optional<Order> findByDate(Date date);
+    Optional<Order> findByDate(Date date);
 
-	Order addOrder(Order order);
+    Order addOrder(Order order);
 
-	Order convertDTOtoModel(OrderDTO dto, String userEmail);
+    Order convertDTOtoModel(OrderDTO dto, String userEmail);
 }
